@@ -4,6 +4,7 @@ import com.gces.budget.BudgetVisualizationApplication;
 import com.gces.budget.domain.dto.UserDTO;
 import com.gces.budget.domain.entity.User;
 import com.gces.budget.repository.UserRepository;
+import com.gces.budget.service.MailService;
 import com.gces.budget.service.UserService;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -78,8 +79,13 @@ public class UserManagementTesting {
         assertNotNull(user);
         log.info("New user fetched");
         assertTrue(user.getEmail().equals(newUser.getEmail()));
-        log.info("User detail : {}",user);
+        log.info("User detail : {}", user);
         userRepository.delete(user);
+    }
+
+    @Test
+    public void testMail(){
+        new MailService().sedMail();
     }
 
 }
