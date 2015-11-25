@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta th:charset="UTF-8" />
+    <title>Budget Visualization | User Login</title>
+</head>
+<body>
+    <div id="header">
+        <div id="content">
+            <h3>Login</h3>
+            <form th:action="@{/user/login}" method="post">
+                <input type="text" name="username" th:placeholder="Username" />
+                <input type="password" name="password" th:placeholder="Password" />
+                <input type="submit" name="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title> Home : Budget Visualization</title>
+</head>
+<body>
+    <ul>
+        <li><a th:href="@{/}">Home</a> </li>
+        <li><form th:action="@{/user/logout}" method="post">
+            <button th:type="submit">Logout</button>
+        </form>
+        </li>
+    </ul>
+    <h1>Welcome! Budget Visualization and Analysis Tool</h1>
+    <h2>User Account</h2>
+    <form th:action="@{/user/account}" method="post" th:object="${user}">
+        <input type="text" th:value="${user.username}" placeholder="Username" />
+        <input type="password" th:value="${user.password}" placeholder="password" />
+        <input type="submit" value="Update" />
+    </form>
+</body>
+</html>
