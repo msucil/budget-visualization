@@ -59,10 +59,10 @@ public class UserDTO {
 
     @Override
     public String toString(){
-        return "UserDTO{ "+
-                "username : " + username + ", "+
-                "password : " + password + ", "+
-                "email : " + email + " }";
+        return "UserDTO {\t"+
+                "username : " + username + "\n"+
+                "password : " + password + "\n"+
+                "email : " + email + "\n}";
     }
 
 }

@@ -1,6 +1,7 @@
 package com.gces.budget.service;
 
 //import com.fasterxml.jackson.annotation.JacksonInject;
+
 import com.gces.budget.domain.dto.UserDTO;
 import com.gces.budget.domain.entity.User;
 import com.gces.budget.repository.UserRepository;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Created by minamrosh on 11/19/15.
@@ -29,7 +32,7 @@ public class UserService {
 
 
 
-    public User registerNewUserByDto(UserDTO userDTO){
+    public User registerNewUser(UserDTO userDTO){
         User user = new User();
         String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setUsername(userDTO.getUsername());
@@ -40,7 +43,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        log.info("New User Created : {}", user);
+        log.debug("New User Created : {}", user);
 
         return user;
     }
@@ -60,5 +63,18 @@ public class UserService {
         log.debug("New User Created : {}", newUser);
 
         return newUser;
+    }
+
+    public User updateExistingUser(User user){
+        User updatedUser = userRepository.save(user);
+        return updatedUser;
+    }
+
+    public void deleteUser(User user){
+        userRepository.delete(user);
+    }
+
+    public List<User> listAllUser(){
+        return userRepository.findAll();
     }
 }

@@ -14,6 +14,11 @@
         </li>
     </ul>
     <h1>Welcome! Budget Visualization and Analysis Tool</h1>
-    <h2>Your BI Partner</h2>
+    <h2>User Account</h2>
+    <form th:action="@{/user/account}" method="post" th:object="${user}">
+        <input type="text" th:value="${user.username}" placeholder="Username" />
+        <input type="password" th:value="${user.password}" placeholder="password" />
+        <input type="submit" value="Update" />
+    </form>
 </body>
 </html>

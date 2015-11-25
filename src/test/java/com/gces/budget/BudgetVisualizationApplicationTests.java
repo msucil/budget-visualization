@@ -3,7 +3,6 @@ package com.gces.budget;
 import com.gces.budget.domain.dto.UserDTO;
 import com.gces.budget.domain.entity.User;
 import com.gces.budget.repository.UserRepository;
-import com.gces.budget.service.TestService;
 import com.gces.budget.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -42,7 +39,7 @@ public class BudgetVisualizationApplicationTests {
 	public void createUser() {
 		UserDTO newUser = new UserDTO("admin", "budget", "np.msushil@gmail.com");
 		log.info("UserDTO object created {}", newUser);
-		User user = userService.registerNewUserByDto(newUser);
+		User user = userService.registerNewUser(newUser);
 		log.info("User registered {}", user);
 
 		assertEquals(newUser.getUsername(), user.getUsername());
@@ -57,19 +54,6 @@ public class BudgetVisualizationApplicationTests {
 		assertNotNull(user);
 		log.info("user fetched : {}", user);
 		assertTrue(user.getUsername().equalsIgnoreCase("msushil"));
-	}
-
-	@Test
-	public void findOneByEmail() {
-		Optional user = userRepository.findOneByEmail("email");
-		assertNotNull(user);
-		log.info("user fetched : {}", user);
-//		assertTrue(user.getUsername().equalsIgnoreCase("msushil"));
-	}
-
-	@Test
-	public void testSecurity(){
-		new TestService().sayHello();
 	}
 
 	@Test
