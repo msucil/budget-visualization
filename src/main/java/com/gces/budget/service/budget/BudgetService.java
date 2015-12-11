@@ -5,6 +5,7 @@ import com.gces.budget.domain.entity.ExpenseBudget;
 import com.gces.budget.domain.entity.IncomeBudget;
 import com.gces.budget.repository.ExpenseBudgetRepository;
 import com.gces.budget.repository.IncomeBudgetRepository;
+import com.mongodb.DuplicateKeyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,10 @@ public class BudgetService {
         }
         catch (NullPointerException ex){
             log.info(ex.getLocalizedMessage());
+        }
+        catch(DuplicateKeyException dup){
+            log.debug(dup.getMessage());
+            throw new org.springframework.dao.DuplicateKeyException("Duplicate Key found");
         }
 
         log.info("Income Budget Read Frome File : \n"+savedIncomeBudget);

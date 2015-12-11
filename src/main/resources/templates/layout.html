@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title> Home : Budget Visualization</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <div>
+            <nav>
+                <ul>
+                    <li><a th:href="@{/}" > Home </a></li>
+                    <li sec:authorize="!isAuthenticated()"><a th:href="@{/user/login}">Login</a></li>
+                    <li sec:authorize="isAuthenticated()" >
+                        <form th:action="@{/user/logout}" method="post">
+                            <button th:type="submit">Logout</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/user/upload-income-budget}">Upload Income Budget</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/user/upload-expense-budget}">Upload Expense Budget</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <footer th:fragment="footer">
+        <p>&copy; Budget Visualization</p>
+    </footer>
+
+</body>
+</html>

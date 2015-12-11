@@ -9,7 +9,6 @@ import com.gces.budget.domain.dto.BudgetSheetDTO;
 import com.gces.budget.domain.entity.ExpenseBudget;
 import com.gces.budget.domain.entity.IncomeBudget;
 import com.gces.budget.domain.entity.User;
-import com.gces.budget.repository.IncomeBudgetRepository;
 import com.gces.budget.repository.UserRepository;
 import com.gces.budget.service.budget.BudgetService;
 import org.junit.Test;
@@ -39,13 +38,6 @@ public class TestBudgetService {
 
     private UserRepository userRepository;
 
-    private IncomeBudgetRepository incomeBudgetRepository;
-
-    @Autowired
-    public void setIncomeBudgetRepository(IncomeBudgetRepository repository){
-        this.incomeBudgetRepository = repository;
-    }
-
     @Autowired
     public void setUserRepository(UserRepository userRepository){
         this.userRepository = userRepository;
@@ -63,13 +55,13 @@ public class TestBudgetService {
         MockMultipartFile uploadFile = new MockMultipartFile("incomeBudget",
                 new FileInputStream(new File("/home/minamrosh/Desktop/budget/income 2070-2071.xls")));
             BudgetSheetDTO budgetSheetDTO = new BudgetSheetDTO();
-            budgetSheetDTO.setFiscalYear("2070-71");
+            budgetSheetDTO.setFiscalYear("2068-69");
             log.info(budgetSheetDTO.toString());
             User user = userRepository.findOneByUsername("prabesh");
             log.info(user.toString());
             IncomeBudget budget = this.budgetService.saveIncomeBudget(uploadFile, budgetSheetDTO, user.getId());
 //            budget = this.incomeBudgetRepository.save(budget);
-            log.info("Saved ONe : \n" + budget);
+            log.info("Saved One : \n" + budget);
         }
         catch (IOException ex){
             log.info(ex.getMessage());
@@ -95,5 +87,4 @@ public class TestBudgetService {
             log.debug(ex.getMessage());
         }
     }
-
 }

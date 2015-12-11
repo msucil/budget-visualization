@@ -26,9 +26,12 @@ public class UserService {
     @Qualifier("bcryptEncoder")
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
 
     private UserRepository userRepository;
+
+    public void setUserRepository(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
 
 

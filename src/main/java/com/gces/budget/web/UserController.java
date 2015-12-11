@@ -11,12 +11,14 @@ import com.gces.budget.service.budget.BudgetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -170,20 +172,25 @@ public class UserController {
 
         if(budgetSheet.isEmpty()){
             log.info("budget sheet empty");
+            result.addError(new FieldError("budget","budgetSheet","Select Income Budget file"));
             return "upload-income-budget";
         }
+        try {
+            IncomeBudget incomeBudget = budgetService.saveIncomeBudget(budgetSheet, budget,
+                    userRepository.findOneByUsername(principal.getName()).getId());
 
-        IncomeBudget incomeBudget = budgetService.saveIncomeBudget(budgetSheet, budget,
-                userRepository.findOneByUsername(principal.getName()).getId());
-
-        if(incomeBudget != null){
             log.info("Income Budget \n" + incomeBudget);
-            return "redirect:/";
         }
-        else{
+        catch (NullPointerException ex){
             log.info("data not saved");
             throw new NullPointerException("Unable to Save file");
         }
+        catch (DuplicateKeyException dup){
+            result.addError(new FieldError("budget","fiscalYear","Fiscal Year Already Exist!"));
+            return "upload-income-budget";
+        }
+
+        return "redirect:/";
 
     }
 
@@ -203,22 +210,30 @@ public class UserController {
             return "upload-expense-budget";
         }
 
+
+
         if(budgetSheet.isEmpty()){
             log.info("budget sheet empty");
+            result.addError(new FieldError("budget", "budgetSheet", "Select Income Budget file"));
             return "upload-expense-budget";
         }
 
-        ExpenseBudget expenseBudget = budgetService.saveExpenseBudget(budgetSheet, budget,
-                userRepository.findOneByUsername(principal.getName()).getId());
+        try{
+            ExpenseBudget expenseBudget = budgetService.saveExpenseBudget(budgetSheet, budget,
+                    userRepository.findOneByUsername(principal.getName()).getId());
 
-        if(expenseBudget != null){
             log.info("Expense Budget \n" + expenseBudget);
-            return "redirect:/";
+
         }
-        else{
-            log.info("data not saved");
-            throw new NullPointerException("Unable to Save file");
+        catch (NullPointerException ex){
+            throw new NullPointerException("Expense budge can't be saved now!");
         }
+        catch (DuplicateKeyException dup){
+            result.addError(new FieldError("budget","fiscalYear","Fiscal Year Already Exist!"));
+            return "upload-expense-budget";
+        }
+
+        return "redirect:/";
 
     }
 
