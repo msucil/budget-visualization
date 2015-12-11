@@ -41,11 +41,13 @@ public class UserService {
         user.setAuthority("ROLE_ADMIN");
         user.setEnabled(true);
 
-        userRepository.save(user);
+        User newuser = userRepository.save(user);
 
-        log.debug("New User Created : {}", user);
+        log.debug("User Service: New User Created : {}", newuser);
 
-        return user;
+        return newuser;
+
+
     }
 
     public User registerNewUser(String username, String password, String email){

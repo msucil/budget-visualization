@@ -1,0 +1,19 @@
+{
+  "name": "Budget Visualization",
+  "authors": [
+    "msushil <np.msushil@gmail.com>"
+  ],
+  "description": "Budget Visualization and Analysis Web Application",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

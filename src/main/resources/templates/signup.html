@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+
+    <title> Home : Budget Visualization</title>
+</head>
+<body>
+<ul>
+    <li><a th:href="@{/}">Home</a> </li>
+</ul>
+<h1>Welcome! Budget Visualization and Analysis Tool</h1>
+<h2>Your BI Partner</h2>
+<div>
+    <form th:action="@{/user/signup}" method="post" th:object="${user}">
+        <div th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}"  th:text="${err}"></p>
+        </div>
+        <div>
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+        </div>
+        <div>
+            <input type="email" th:value="${user.email}" th:field="${user.email}" placeholder="Email" />
+            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label> <br />
+            <input type="text" th:value="${user.username}" th:field="${user.username}" placeholder="Username" /> <br/>
+            <input type="password" th:value="${user.password}" th:field="${user.password}" placeholder="Password" /><br />
+            <input type="password" th:value="${user.matchingPassword}" th:field="${user.matchingPassword}" placeholder="Confirm Password" />
+            <input type="submit" value="Signup" />
+        </div>
+
+
+    </form>
+</div>
+
+</body>
+</html>

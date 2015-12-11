@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+
+    <title> Home : Budget Visualization</title>
+</head>
+<body>
+<ul>
+    <li><a th:href="@{/}">Home</a> </li>
+</ul>
+<h1>Welcome! Budget Visualization and Analysis Tool</h1>
+<h2>Your BI Partner</h2>
+<div>
+    <form th:action="@{/user/upload-income-budget}" method="post" th:object="${budget}" enctype="multipart/form-data">
+        <div th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}"  th:text="${err}"></p>
+        </div>
+
+        <div>
+            <input type="text" th:value="${budget.fiscalYear}" th:field="${budget.fiscalYear}"
+                   placeholder="Fiscal Year" />
+            <input type="file" th:value="${budget.budgetSheet}" th:field="${budget.budgetSheet}"
+                   placeholder="Upload Income Budget Sheet" />
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

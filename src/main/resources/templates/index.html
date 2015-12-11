@@ -8,12 +8,16 @@
 <body>
     <ul>
         <li><a th:href="@{/}">Home</a> </li>
-        <li><form th:action="@{/user/logout}" method="post">
+        <li sec:authorize="isAuthenticated()"><form th:action="@{/user/logout}" method="post">
             <button th:type="submit">Logout</button>
         </form>
         </li>
     </ul>
     <h1>Welcome! Budget Visualization and Analysis Tool</h1>
     <h2>Your BI Partner</h2>
+    <div sec:authorize="isAuthenticated()">
+        You are Welcome
+    </div>
+    <div sec:authorize="!isAuthenticated()">You Are Guest</div>
 </body>
 </html>
