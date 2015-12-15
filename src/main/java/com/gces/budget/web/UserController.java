@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 /**
@@ -164,7 +165,7 @@ public class UserController {
     @RequestMapping(value = "/user/upload-income-budget", method = RequestMethod.POST)
     public String saveIncomeBudget(@ModelAttribute("budget") @Valid BudgetSheetDTO budget, BindingResult result,
                                   @RequestParam("budgetSheet") MultipartFile budgetSheet,
-                                   Principal principal){
+                                   Principal principal) throws IOException {
 
         if(result.hasErrors()){
             return "upload-income-budget";
@@ -180,6 +181,10 @@ public class UserController {
                     userRepository.findOneByUsername(principal.getName()).getId());
 
             log.info("Income Budget \n" + incomeBudget);
+        }
+        catch (IOException ex){
+            log.info(ex.getMessage());
+            throw new IOException(ex.getMessage());
         }
         catch (NullPointerException ex){
             log.info("data not saved");
@@ -204,7 +209,7 @@ public class UserController {
     @RequestMapping(value = "/user/upload-expense-budget", method = RequestMethod.POST)
     public String saveExpenseBudget(@ModelAttribute("budget") @Valid BudgetSheetDTO budget, BindingResult result,
                                    @RequestParam("budgetSheet") MultipartFile budgetSheet,
-                                   Principal principal){
+                                   Principal principal) throws IOException {
 
         if(result.hasErrors()){
             return "upload-expense-budget";
@@ -225,6 +230,10 @@ public class UserController {
             log.info("Expense Budget \n" + expenseBudget);
 
         }
+        catch (IOException ex){
+            log.info(ex.getMessage());
+            throw new IOException(ex.getMessage());
+        }
         catch (NullPointerException ex){
             throw new NullPointerException("Expense budge can't be saved now!");
         }
@@ -235,6 +244,12 @@ public class UserController {
 
         return "redirect:/";
 
+    }
+
+    @RequestMapping(value = "/user/demo",method = RequestMethod.GET)
+    public String demoJs(Model model){
+        model.addAttribute("jstitle","Hello Fromm Spring Controller");
+        return "demojs";
     }
 
 }

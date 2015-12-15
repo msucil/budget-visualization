@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title> DemoJS : Budget Visualization</title>
+</head>
+<body>
+    <header th:include="layout :: header"></header>
+    <!--<ul>-->
+        <!--<li><a th:href="@{/}">Home</a> </li>-->
+        <!--<li sec:authorize="isAuthenticated()"><form th:action="@{/user/logout}" method="post">-->
+            <!--<button th:type="submit">Logoutyear</button>-->
+        <!--</form>-->
+        <!--</li>-->
+    <!--</ul>-->
+    <h1>Welcome! Budget Visualization and Analysis Tool</h1>
+    <h2>Your BI Partner</h2>
+    <div sec:authorize="isAuthenticated()">
+        You are Welcome
+    </div>
+    <div sec:authorize="!isAuthenticated()">You Are Guest</div>
+
+    <footer th:include="layout :: footer">
+    </footer>
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var title = "jstitle";
+        var content = [[${jstitle}]];
+        console.log(content);
+        console.log(title);
+        alert("hello");
+        alert(content);
+        /*]]>*/
+    </script>
+</body>
+</html>

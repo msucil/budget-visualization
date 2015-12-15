@@ -26,6 +26,10 @@ public class BudgetService {
 
     private ExpenseBudgetRepository expenseBudgetRepo;
 
+    private IncomeBudget savedIncomeBudget;
+
+    private ExpenseBudget savedExpenseBudget;
+
     private ISheetSerivce sheetService;
 
     MultipartFile file;
@@ -46,49 +50,69 @@ public class BudgetService {
     }
 
 
-    public IncomeBudget saveIncomeBudget(MultipartFile incomeBudgetFile, BudgetSheetDTO budgetSheetDTO, String userId){
-        IncomeBudget savedIncomeBudget = new IncomeBudget();
+    public IncomeBudget saveIncomeBudget(MultipartFile incomeBudgetFile, BudgetSheetDTO budgetSheetDTO, String userId) throws IOException {
+
         try{
             IncomeBudget incomeBudget = sheetService.getIncomeBudgetFromFile(incomeBudgetFile);
 
             incomeBudget.setFiscalYear(budgetSheetDTO.getFiscalYear());
             incomeBudget.setUserId(userId);
 //            return incomeBudget;
-
+            log.info("income budget read " + incomeBudget);
             savedIncomeBudget = incomeRepo.save(incomeBudget);
+            log.info("saved income budget" + savedIncomeBudget);
+
             return  savedIncomeBudget;
         }
         catch(IOException ex){
             log.info("IOException " + ex.getMessage());
+            throw new IOException("Unable to read uploaded file!");
         }
         catch (NullPointerException ex){
             log.info(ex.getLocalizedMessage());
+            throw new NullPointerException(ex.getMessage());
         }
         catch(DuplicateKeyException dup){
             log.debug(dup.getMessage());
             throw new org.springframework.dao.DuplicateKeyException("Duplicate Key found");
         }
-
-        log.info("Income Budget Read Frome File : \n"+savedIncomeBudget);
-        return savedIncomeBudget;
     }
 
-    public ExpenseBudget saveExpenseBudget(MultipartFile expenseBudgetFile, BudgetSheetDTO budgetSheetDTO, String userId){
-        ExpenseBudget expenseBudget = null;
+    public ExpenseBudget saveExpenseBudget(MultipartFile expenseBudgetFile, BudgetSheetDTO budgetSheetDTO, String userId) throws IOException, DuplicateKeyException {
+
         try{
-            expenseBudget = sheetService.getExpenseBudgetFromFile(expenseBudgetFile);
+            ExpenseBudget expenseBudget = expenseBudget = sheetService.getExpenseBudgetFromFile(expenseBudgetFile);
             expenseBudget.setFiscalYear(budgetSheetDTO.getFiscalYear());
             expenseBudget.setUserId(userId);
 
-            return expenseBudgetRepo.save(expenseBudget);
+            log.info("Expense Budget Read From File : \n" + expenseBudget);
+            savedExpenseBudget = expenseBudgetRepo.save(expenseBudget);
+
+            return savedExpenseBudget;
 
         }
         catch (IOException ex){
             log.debug(ex.getMessage());
+            throw new IOException(ex.getMessage());
+
+        }
+        catch (NullPointerException ex){
+            log.debug(ex.getMessage());
+            throw new NullPointerException(ex.getMessage());
+        }
+        catch (org.springframework.dao.DuplicateKeyException ex){
+            log.debug(ex.getMessage());
+            throw new org.springframework.dao.DuplicateKeyException(ex.getMessage());
         }
 
-        log.info("Expense Budget Read From File : \n"+expenseBudget);
-        return null;
+    }
+
+    public void deleteAllIncomeBudget(){
+        incomeRepo.deleteAll();
+    }
+
+    public void deleteAllExpenseBudget(){
+        expenseBudgetRepo.deleteAll();
     }
 
 

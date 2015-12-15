@@ -16,6 +16,8 @@ public interface ExpenseBudgetRepository extends MongoRepository<ExpenseBudget, 
 
     public List<IncomeBudget> findAllByUserId(String userId);
 
+    public ExpenseBudget findOneByFiscalYear(String fiscalYear);
+
     @Override
     public void delete(ExpenseBudget expenseBudget);
 }
