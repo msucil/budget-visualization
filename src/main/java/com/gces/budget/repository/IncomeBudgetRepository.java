@@ -18,4 +18,6 @@ public interface IncomeBudgetRepository extends MongoRepository<IncomeBudget, St
 
     @Override
     public void delete(IncomeBudget incomeBudget);
+
+
 }
