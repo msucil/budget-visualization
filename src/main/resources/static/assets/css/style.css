@@ -1,0 +1,302 @@
+@media only screen and (max-width: 320px) {
+    .col-md-10{
+        padding: 0 0;
+    }
+}
+h1, h2, h3, h4, h5{
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+body{
+    font-family: fantasy;
+}
+.btn-my-danger{
+    background-color: #E93939;
+}
+/*index page*/
+/*=============================================================================================*/
+/*nav bar*/
+.navbar-fixed-top{
+    background-color: transparent;
+}
+.top-nav-collapse{
+    background-color: #616161;
+}
+.navbar-right p{
+    margin-bottom: 0;
+}
+.navbar-right p a {
+    color: #ffffff;
+}
+.navbar-right p a:hover, .navbar-right p a:focus{
+    color:#eeeeee;
+}
+.navbar-right p i{
+    padding: 0px 8px;
+    color: #ffffff;
+}
+/*end of nav bar*/
+/*login is modal*/
+.modal-dialog {
+    width: 390px;
+    margin: 100px auto;
+}
+.modal-header{
+    background-color: #424242;
+    color: #fafafa;
+}
+.modal-header h4{
+    font-family: "FontAwesome";
+    font-width: 400;
+}
+.modal-body{
+    padding: 40px 50px;
+    background-color: #ffffff;
+}
+.remember-me label{
+    font-size: 0.9rem;
+}
+.modal-login input{
+    margin: 30px 0 0 0;
+    color: whitesmoke;
+}
+.modal-login input:hover, .modal-login input:focus{
+    color: whitesmoke;
+}
+.modal-footer{
+    padding: 10px 50px;
+    background-color: rgb(246, 246, 246);
+}
+.modal-footer div p a{
+    font-weight: 300;
+    font-size: 15px;
+}
+.modal-footer div button{
+    margin-left: 0;
+    background-color: #E93939;
+    color: whitesmoke;
+}
+.modal-footer div button:hover, .modal-footer div button:focus{
+    color: whitesmoke;
+}
+/*end of login modal*/
+
+/*section for image in place carousel*/
+.banner-img img{
+    width: 100%;
+    min-height: 90%;
+}
+/*end of the image section*/
+/*spacing between two divs*/
+.spacing{
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+/*end of spacing section*/
+/*for footer*/
+footer.page-footer{
+    margin-top: 0;
+    padding-top: 0;
+}
+.footer-about p{
+    padding-bottom: 30px;
+}
+.footer-links li{
+    display: inline-block;
+    padding: 3px 10px 0 10px;
+}
+.footer-links li a{
+    font-size: 1rem;
+}
+.footer-links li a:hover, .footer-links li a:focus{
+    color: lightgrey;
+}
+/*end of footer*/
+/*======================================================================================================*/
+/*end of index page*/
+
+
+/*forget password page*/
+/*-----------------------------------------------------------------------------------------------------*/
+.forget-password{
+    background-color: lightgrey;
+    margin-top: 50px;
+}
+.form input[type=text]:focus {
+    border-bottom: 1px solid #FFF;
+    box-shadow: 0 1px 0 0 #000;
+}
+.forget-password form input{
+    background-color: whitesmoke;
+}
+.form input{
+    background-color: #ffffff;
+    padding: 0;
+    width: 45%;
+}
+/*-----------------------------------------------------------------------------------------------------*/
+/*end of forget password page*/
+/*visualization page*/
+.rgba-grey-lighten-5{
+    background-color: #fafafa;
+}
+.main-container{
+    padding-top: 100px;
+}
+.navbar-nav-color{
+    background-color: #616161;
+}
+.heading-visualization{
+    padding: 0 0 10px 0;
+}
+.treemap{
+    max-height: 700px;
+}
+.treemap-side-bar h4{
+    padding-left: 10px;
+}
+.treemap-side-bar ul{
+    padding-left: 50px;
+}
+.treemap-side-bar ul li{
+    padding: 5px;
+}
+/*end of visualization page*/
+/*analysis page*/
+.range-slider{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 50px;
+}
+.irs-from, .irs-to, .irs-single {
+    background: rgb(99, 203, 144) none repeat scroll 0% 0%;
+}
+.irs-from::after, .irs-to::after, .irs-single::after {
+    border-color: rgb(99, 203, 144) transparent transparent;
+}
+.side-content {
+    width: 81%;
+    margin-left: 1%;
+}
+.right-bar{
+    padding-right: 0;
+}
+.download-files{
+    margin-bottom: 15%;
+}
+.download-files ul li a{
+    color: #333333;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.download-files ul li a:hover, .download-files ul li a:focus{
+    color: gray;
+}
+.dropdown-menu{
+    min-width: 80px;
+}
+.dropdown-menu li a{
+    color: #333333;
+    padding: 5px 10px;
+    font-size: 1rem;
+}
+
+/*circle button*/
+.btn-floating.btn-large i {
+    line-height: 52.5px;
+}
+.btn-floating.btn-large {
+    width: 52.5px;
+    height: 52.5px;
+}
+/*end of circle button*/
+.chart-icons{
+    margin-bottom: 20px;;
+}
+.chart-icons a{
+    margin: 3px;
+}
+.color-component-chart ul li p span{
+    font-size: 13px;
+    padding-right: 10px;
+    margin-bottom: 0;
+    color: green;
+}
+.color-component-chart h5{
+    font-size: large;
+}
+.color-component-chart ul {
+    margin: 20px 0 20px 20px;
+}
+
+.color-component-chart ul li p{
+    margin-bottom: 4px;
+    font-size: medium;
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+.top-content p{
+    padding-bottom: 20px;
+}
+.level-analysis li{
+    margin-left: 10px;
+    margin-right: 7px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.level-analysis li a{
+    color: gray;
+    padding: 10px 10px;
+}
+.form-section{
+    padding-bottom: 20px;
+}
+.form-section p{
+    margin-bottom: 0;
+}
+.form-section p label{
+    color: #333;
+    font-size: 1rem;
+    font-weight: 300;
+}
+.spacing-both{
+    padding: 50px 0;
+}
+.table-section{
+    margin-top: 2%;
+}
+.table{
+    width: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin:2% 0;
+
+}
+
+
+/*end of analysis page*/
+
+/*error page*/
+#error-heading h1{
+    font-size: 150px;
+    margin: 0;
+    background-color: rgb(240, 240, 240);
+    font-family: fantasy;
+}
+#error-heading p{
+    background-color: rgb(240, 240, 240);
+    margin-bottom: 0;
+    font-size: 40px;
+    padding-bottom: 20px;
+    font-weight: 300;
+}
+#error-image{
+    background-color: #FF6868;
+}
+#error-image img{
+    width: 185px;
+    height: auto;
+    background: rgb(240, 240, 240);
+}
+#error-image p{
+    padding: 30px 0;
+    color: whitesmoke;
+}
+/*end of error page*/
