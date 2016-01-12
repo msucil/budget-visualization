@@ -66,7 +66,7 @@ public class SheetService implements ISheetSerivce{
             }
         }
 
-        log.debug("reading income budget finished!");
+        log.info("reading income budget finished!");
 
         return incomeBudget;
     }
@@ -220,7 +220,7 @@ public class SheetService implements ISheetSerivce{
                 expenseBudget.setRdActivity(expenseAmount);
                 break;
             case "Application Procedure for M. Program" :
-                expenseBudget.setGratuity(expenseAmount);
+                expenseBudget.setAppProcedureMProg(expenseAmount);
                 break;
             case "Rebate for Fee" :
                 expenseBudget.setRebateForFee(expenseAmount);
@@ -228,7 +228,7 @@ public class SheetService implements ISheetSerivce{
             case "Provident Fund" :
                 expenseBudget.setProvidentFund(expenseAmount);
                 break;
-            case "Students Walefare/IT Mahotsab" :
+            case "Students Welfare/IT Mahotsab" :
                 expenseBudget.setStudentWalefareMahotsav(expenseAmount);
                 break;
             case "OT, Insurance, T.A.D.A" :

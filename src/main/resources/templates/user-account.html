@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="dashboardLayout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="dashboard-main">
+
+<header th:include="dashboardLayout :: header">
+</header>
+<section class="container-fluid dashboard-main">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:include="dashboardLayout :: sideNav"></div>
+        </div>
+        <div class="col-md-10">
+            <div class="main-contain">
+                <div class="main-title z-depth-1 clearfix">
+                    <h5 class="pull-left" ><i class="fa fa-th">&nbsp;</i><span th:text="${sectionTitle}"></span> </h5>
+                    <div class="pull-right">
+                        <div th:if="${income}">
+                            <a th:href="@{/dashboard/upload-income-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+                        <div th:if="!${income}">
+                            <a th:href="@{/dashboard/upload-expense-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="">
+                    <div class="form-content">
+                    <form class="form-horizontal" th:action="@{/user/account}" method="post" th:object="${userDTO}">
+                        <div th:if="${#fields.hasErrors('*')}">
+                            <p th:each="err : ${#fields.errors('*')}"  th:text="${err}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-3 control-label label-style">Username</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="username" type="text" th:value="${userDTO.username}" th:field="${userDTO.username}" placeholder="Username" />
+                                <input type="hidden" th:field="${userDTO.id}" th:value="${userDTO.id}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label label-style">Email</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="email" type="email" th:value="${userDTO.email}" th:field="${userDTO.email}" placeholder="Email" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nwPass" class="col-sm-3 control-label label-style">New Password</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="nwPass" type="password"  th:field="${userDTO.password}" placeholder="New Password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mPass" class="col-sm-3 control-label label-style">Confirm Password</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="mPass" type="password"  th:field="${userDTO.matchingPassword}" placeholder="Confirm Password" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <button type="submit" class="btn btn-default">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer th:include="dashboardLayout :: footer">
+</footer>
+</body>
+</html>

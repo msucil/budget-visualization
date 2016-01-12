@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 /**
  * Created by minamrosh on 12/9/15.
  */
+
 @Document(collection = "incomeBudget")
 public class IncomeBudget {
 
@@ -47,6 +48,7 @@ public class IncomeBudget {
 
     public IncomeBudget(){}
 
+//    @Value("${entity.budget.defaultValue}")
     private BigDecimal meiseMasterDegree;
 
     public String getId(){

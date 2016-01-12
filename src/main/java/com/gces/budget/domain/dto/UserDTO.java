@@ -34,12 +34,22 @@ public class UserDTO {
     @ValidEmail(message = "Please enter valid email address")
     private String email;
 
+    private String id;
+
     public UserDTO(){};
 
     public UserDTO(String username, String password, String email){
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public void setUsername(String username){
@@ -77,6 +87,7 @@ public class UserDTO {
     @Override
     public String toString(){
         return "UserDTO {\t"+
+                "Id : " + this.id + "\n" +
                 "username : " + username + "\n"+
                 "password : " + password + "\n"+
                 "email : " + email + "\n}";

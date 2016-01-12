@@ -3,12 +3,7 @@
         padding: 0 0;
     }
 }
-h1, h2, h3, h4, h5{
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
-}
-body{
-    font-family: fantasy;
-}
+
 .btn-my-danger{
     background-color: #E93939;
 }
@@ -300,3 +295,148 @@ footer.page-footer{
     color: whitesmoke;
 }
 /*end of error page*/
+
+
+/*dashboard page*/
+.nav-contain h5{
+    color: whitesmoke;
+}
+.nav-right-contains{
+    margin:  25px 10px 10px;
+}
+.nav-right-contains ul li {
+    color: whitesmoke;
+    font-size: 1.1em;
+    padding: 0 10px;
+}
+.nav-right-contains ul li a i{
+    color: whitesmoke;
+    font-size: 1.5em;
+}
+.dashboard-main{
+    /*padding: 0px 0px 10px;*/
+    background-color: whitesmoke;
+}
+.elegant-color{
+    background-color: #2E2E2E;
+}
+.side-link{
+    margin-bottom: 10px;
+}
+.side-link ul li{
+    padding: 10px;
+}
+.side-link ul li a{
+    color: #DDDADA;
+    font-size: 1em;
+}
+.side-link ul li:hover, .side-link ul li:focus{
+    background-color: #848383;
+    cursor: pointer;
+}
+.side-link ul li a span{
+    padding-right: 10px;
+}
+.main-title h5{
+    padding: 0 10px;
+}
+.table-contain tbody tr td{
+    vertical-align: middle;
+}
+table{
+    background-color: #FFFFFF;
+}
+.table-option-icon button{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.pagination-contain li a{
+    background-color: transparent;
+}
+.pagination-contain .active a{
+    background-color: #D8D8D8;
+    border-color: #A2A2A2;
+}
+.pagination-contain .active a:hover{
+    background-color: #D8D8D8;
+}
+/*upload page*/
+.form-content{
+    margin-left: 20px;
+    margin-top: 40px;
+}
+
+.calander-icon {
+    padding: 1px 16px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-align: center;
+    background-color: #E6E3E3;
+    border-radius: 56px !important;
+    border: 1px solid #CCC !important;
+    margin-left: 20px;
+    cursor: pointer;
+
+}
+.input-date{
+    margin-left: 10px !important;
+}
+.help-block{
+    margin-left: 10px !important;
+}
+.label-style{
+    font-size: 17px;
+    color: #666;
+    font-weight: 400;
+}
+/*end of upload page*/
+/*end of dashboard page*/
+
+/*dashboard login*/
+.dashboard-login-bg{
+    background: #414141;
+}
+#dashboard-login{
+    margin-top: 15%;
+}
+#dashboard-login h4{
+    margin: 40px 0;
+}
+#login-into-dashboard button{
+    margin: 40px 0;
+}
+
+.follow {
+    width: 42px;
+    height: 42px;
+    border-radius: 50px;
+    background: #f4f0f4;
+    display: inline-block;
+    margin: 50px calc(50% - 21px);
+    white-space: nowrap;
+    padding: 8px;
+    box-sizing: border-box;
+    color: #414141;
+    transition: all 0.2s ease;
+    font-family: Roboto, sans-serif;
+    text-decoration: none;
+    box-shadow: 0 5px 6px 0 rgba(0,0,0,0.2)
+
+}
+.follow i {
+    margin-right: 10px;
+    transition: margin-right 0.2s ease;
+    /*font-size: 20px;*/
+    /*padding: px;*/
+}
+.follow:hover{
+    width: auto;
+    transform: translateX(-50px);
+    color: #414141;
+}
+.follow:hover i{
+    /*margin-right: 10px;*/
+}
+/*dashboard login ends*/

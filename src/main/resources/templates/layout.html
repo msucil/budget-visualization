@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="headSection (pageTitle)">
     <meta charset="UTF-8" />
-    <title> Home : Budget Visualization</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title th:text="${pageTitle}"> </title>
+
+    <!-- Material Design Icons -->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/assets/plugin/font-awesome/css/font-awesome.min.css}" />
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Material Design Bootstrap -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/mdb.css}" rel="stylesheet" />
+
+    <!--rangeslider styling-->
+    <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/normalize.css}" />
+    <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/ion.rangeSlider.css}" />
+    <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/ion.rangeSlider.skinFlat.css}" />
+    <!--custom css-->
+    <!--for radio check buttons-->
+    <link th:href="@{/assets/plugin/icheck-1.x/square/grey.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" type="text/css" />
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/jquery.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/bootstrap.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/mdb.js}" ></script>
 </head>
 <body>
     <header th:fragment="header">
@@ -27,6 +55,48 @@
             </nav>
         </div>
     </header>
+
+    <section th:fragment="loginModal">
+        <!--MOdal-->
+        <div class="container">
+            <div class="modal fade" id="modalLogin" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4>Login</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <form action="#" th:action="@{/user/login}" method="post">
+                                    <div class="input-field">
+                                        <input id="icon-email" name="username" placeholder="Username" type="text" class="validate"/>
+                                    </div>
+                                    <div class="input-field">
+                                        <input id="password" placeholder="Password" name="password" type="password" class="validate"/>
+                                    </div>
+                                    <!--<p class="remember-me">-->
+                                        <!--<input type="checkbox" class="filled-in" id="remember-me" />-->
+                                        <!--<label for="remember-me">Remember Me</label>-->
+                                    <!--</p>-->
+                                    <div class="input-field modal-login">
+                                        <input type="submit" class="btn grey darken-1 btn-block waves-light" value="Login"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="text-left">
+                                <p><a href="#">Forget Password ?</a></p>
+                                <button class="btn waves-light btn-sm">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of Modal-->
+    </section>
 
     <footer th:fragment="footer">
         <p>&copy; Budget Visualization</p>

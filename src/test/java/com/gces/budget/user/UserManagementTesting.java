@@ -56,10 +56,10 @@ public class UserManagementTesting {
 
     @Test
     public void findUserByUsername(){
-        User user = userRepository.findOneByUsername("msushil");
+        User user = userRepository.findOneByUsername("prabesh");
         assertNotNull(user);
-        log.info("User with username {} extracted \n{}", "msushil", user);
-        assertTrue(user.getUsername().equalsIgnoreCase("msushil"));
+        log.info("User with username {} extracted \n{}", "prabesh", user.getId());
+        assertTrue(user.getUsername().equalsIgnoreCase("prabesh"));
     }
 
     @Test
@@ -87,5 +87,6 @@ public class UserManagementTesting {
     public void testMail(){
         new MailService().sedMail();
     }
+
 
 }

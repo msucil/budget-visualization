@@ -70,7 +70,7 @@ public class TestBudgetService {
 
             BudgetSheetDTO budgetSheetDTO = new BudgetSheetDTO();
 
-            budgetSheetDTO.setFiscalYear("2068-69");
+            budgetSheetDTO.setFiscalYear("2015");
 
             log.info(budgetSheetDTO.toString());
 

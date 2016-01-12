@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="dashboardLayout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="dashboard-main">
+
+<header th:include="dashboardLayout :: header">
+</header>
+<section class="container-fluid dashboard-main">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:include="dashboardLayout :: sideNav"></div>
+        </div>
+        <div class="col-md-10">
+            <div class="main-contain">
+                <div class="main-title z-depth-1 clearfix">
+                    <h5 class="pull-left" ><i class="fa fa-th">&nbsp;</i><span th:text="${sectionTitle}"></span> </h5>
+                    <div class="pull-right">
+                        <div th:if="${income}">
+                            <a th:href="@{/dashboard/upload-income-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+                        <div th:if="!${income}">
+                            <a th:href="@{/dashboard/upload-expense-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="z-depth-1">
+                    <div th:if="${budgetSheets}">
+                        <table class="table table-responsive table-contain">
+                        <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Fiscal Year</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="sheet, sheetStat : ${budgetSheets}">
+                            <td th:text="${sheetStat.count}">1</td>
+                            <td th:text="${sheet.fiscalYear}">2015</td>
+                            <td class="table-option-icon">
+                                <div th:if="${income}" style="display: inline-block;">
+                                    <a href="update"
+                                       th:href="@{/dashboard/update-income-budget-sheet/{sheetId}(sheetId=${sheet.id})}">
+                                        <button class="btn btn-success btn-sm" type="button">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </a>
+
+                                    <a href="delete" th:href="@{/dashboard/view-income-budget-sheet/{sheetId}(sheetId=${sheet.id})}">
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </a>
+
+                                    <form style="display: inline-block;" th:action="@{/dashboard/delete-income-budget-sheet}" th:method="post">
+                                        <input type="hidden" th:value="${sheet.id}" name="sheetId" />
+                                        <button class="btn btn-danger btn-sm" type="submit">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div th:if="!${income}" style="display: inline-block;">
+                                    <a href="update"
+                                       th:href="@{/dashboard/update-expense-budget-sheet/{sheetId}(sheetId=${sheet.id})}">
+                                        <button class="btn btn-success btn-sm" type="button">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    </a>
+
+                                    <a href="delete" th:href="@{/dashboard/view-expense-budget-sheet/{sheetId}(sheetId=${sheet.id})}">
+                                        <button class="btn btn-default btn-sm" type="button">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </a>
+
+                                    <form style="display: inline-block;" th:action="@{/dashboard/delete-expense-budget-sheet}" th:method="post">
+                                        <input type="hidden" th:value="${sheet.id}" name="sheetId" />
+                                        <button class="btn btn-danger btn-sm" type="submit">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div th:if="!${budgetSheets}">
+                        <h4 style="padding: 15px; color: darkred;" class="text-center">No Sheets Available!</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer th:include="dashboardLayout :: footer">
+</footer>
+</body>
+</html>

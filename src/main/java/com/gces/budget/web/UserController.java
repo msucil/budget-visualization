@@ -61,7 +61,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("pageTitle","Home | Budget Visualization and Analysis Tool");
         return "index";
     }
 
@@ -138,22 +139,37 @@ public class UserController {
 
         UserDetails logedInUser = (UserDetails) authentication.getPrincipal();
         log.info("user details, username : " +logedInUser.getUsername());
-        User user = userRepository.findOneByUsername(logedInUser.getUsername());
+        User user = userService.getUserByUsername(logedInUser.getUsername());
         log.info("user details of loged in user " + user);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setUsername(user.getUsername());
         model.addAttribute("user",user);
+        model.addAttribute("userDTO",userDTO);
+        model.addAttribute("pageTitle","User Account | Budget Visualization & Analysis Tool");
+        model.addAttribute("sectionTitle","User Account");
 
 //        model.addAttribute("userDetail",authentication.getDetails());
-        return "account";
+        return "user-account";
     }
 
     @RequestMapping(value = "/user/account",method = RequestMethod.POST)
-    public String saveAccount(@Valid User user){
-        User upUser = userRepository.save(user);
-        if(upUser == null){
-            throw new IllegalArgumentException("exception while storing information");
+    public String saveAccount(@ModelAttribute("userDTO") @Valid UserDTO userDTO, BindingResult result,Model model){
+
+        model.addAttribute("pageTitle","User Account | Budget Visualization & Analysis Tool");
+        model.addAttribute("sectionTitle","User Account");
+
+        if(result.hasErrors()){
+            log.error("\n form Error" + result.toString());
+            return "user-account";
         }
 
-        return "user/account";
+        log.info("userinfo " + userDTO.toString());
+
+        userService.updateUserInfo(userDTO);
+        return "redirect:/user/account";
+
     }
 
     @RequestMapping(value = "/user/upload-income-budget")

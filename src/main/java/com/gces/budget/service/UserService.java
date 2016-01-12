@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class UserService {
 
     private UserRepository userRepository;
 
+    @Autowired
     public void setUserRepository(UserRepository userRepository){
         this.userRepository = userRepository;
     }
@@ -37,6 +39,7 @@ public class UserService {
 
     public User registerNewUser(UserDTO userDTO){
         User user = new User();
+
         String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setUsername(userDTO.getUsername());
         user.setPassword(encryptedPassword);
@@ -49,8 +52,16 @@ public class UserService {
         log.debug("User Service: New User Created : {}", newuser);
 
         return newuser;
+    }
 
+    public User updateUserInfo(UserDTO userDTO){
+        User user = userRepository.findOne(userDTO.getId());
+        user.setUsername(userDTO.getUsername());
+        String encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+        user.setPassword(encryptedPassword);
+        user.setEmail(userDTO.getEmail());
 
+        return userRepository.save(user);
     }
 
     public User registerNewUser(String username, String password, String email){
@@ -82,4 +93,15 @@ public class UserService {
     public List<User> listAllUser(){
         return userRepository.findAll();
     }
+
+    public String getCurrentUserId(Principal principal){
+//        log.info(username);
+        return userRepository.findOneByUsername(principal.getName()).getId();
+    }
+
+    public User getUserByUsername(String username){
+        return userRepository.findOneByUsername(username);
+    }
+
+
 }

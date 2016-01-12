@@ -19,7 +19,7 @@ public class User {
     @Size(max = 25, min = 5)
     private String username;
 
-    @NotNull(message = "password required")
+    @NotNull(message = "Password required")
     private String password;
 
     @NotNull
@@ -33,6 +33,10 @@ public class User {
     private String authority;
 
     public User(){}
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getId(){
         return  this.id;

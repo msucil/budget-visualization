@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headSection (pageTitle)">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title th:text="${pageTitle}"> </title>
+
+    <!-- Material Design Icons -->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/assets/plugin/font-awesome/css/font-awesome.min.css}" />
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Material Design Bootstrap -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/mdb.css}" rel="stylesheet" />
+
+    <!-- jasny file uploader -->
+    <link th:href="@{/assets/plugin/jasny-bootstrap/css/jasny-bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- bootstrap date-picker -->
+    <link th:href="@{/assets/plugin/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}" rel="stylesheet" />
+
+
+    <!--custom css-->
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" type="text/css" />
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/jquery.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/bootstrap.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/mdb.js}" ></script>
+
+    <!-- jasny file uploader -->
+    <script type="text/javascript" th:src="@{/assets/plugin/jasny-bootstrap/js/jasny-bootstrap.min.js}"></script>
+
+    <!--Date Picker-->
+    <script type="text/javascript" th:src="@{/assets/plugin/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+</head>
+<body>
+<header th:fragment="header">
+        <nav class="navbar elegant-color">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="navbar-brand">
+                            <h5><a th:href="@{/dashboard}">Data Visualization</a></h5>
+                        </div>
+                        <div class="navbar-right nav-right-contains">
+                            <ul class="list-inline">
+                                <li><a href="#" th:href="@{/}"><i class="fa fa-home"></i></a></li>
+                                <li><form th:action="@{/user/logout}" th:method="post"><button type="submit">Logout</button></form></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+</header>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-md-2" th:fragment="sideNav">
+            <div class="elegant-color">
+                <div class="side-link z-depth-1-half">
+                    <ul>
+                        <li class="active"><a th:href="@{/dashboard}"><i class="fa fa-dashboard">&nbsp;</i>Dashboard</a></li>
+                        <li><a href="upload.html" th:href="@{/dashboard/income-budget-sheets}"><i class="fa fa-file-excel-o">&nbsp;</i>Income Budget Sheets</a></li>
+                        <li><a href="upload.html" th:href="@{/dashboard/expense-budget-sheets}"><i class="fa fa-file-excel-o">&nbsp;</i>Expense Budget Sheets</a></li>
+                        <li><a href="#" th:href="@{/user/account}"><i class="fa fa-user">&nbsp;</i>Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:fragment="footer">
+    <p>&copy; Budget Visualization</p>
+</footer>
+
+</body>
+</html>

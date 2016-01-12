@@ -15,6 +15,9 @@ public class BudgetSheetDTO {
     @NotNull
     private MultipartFile budgetSheet;
 
+
+    private String sheetId;
+
     /**
      * true income;
      * false expense;
@@ -42,9 +45,16 @@ public class BudgetSheetDTO {
         return this.sheetType;
     }
 
-
     public MultipartFile getBudgetSheet(){
         return  this.budgetSheet;
+    }
+
+    public void setSheetId(String sheetId){
+        this.sheetId = sheetId;
+    }
+
+    public String getSheetId(){
+        return this.sheetId;
     }
 
     public String toString(){

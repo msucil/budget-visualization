@@ -2,18 +2,58 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta th:charset="UTF-8" />
-    <title>Budget Visualization | User Login</title>
+
+    <title> Login | Budget Visualization &amp; Analysis Tool </title>
+
+    <!-- Material Design Icons -->
+    <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/assets/plugin/font-awesome/css/font-awesome.min.css}" />
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+
+    <!-- Material Design Bootstrap -->
+    <link th:href="@{/assets/plugin/mdbootstrap/css/mdb.css}" rel="stylesheet" />
+
+    <!--custom css-->
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" type="text/css" />
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/jquery.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/bootstrap.min.js}" ></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/mdb.js}" ></script>
 </head>
-<body>
-    <div id="header">
-        <div id="content">
-            <h3>Login</h3>
-            <form th:action="@{/user/login}" method="post">
-                <input type="text" name="username" th:placeholder="Username" />
-                <input type="password" name="password" th:placeholder="Password" />
-                <input type="submit" name="submit" value="Submit" />
-            </form>
+<body class="dashboard-login-bg">
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div id="dashboard-login" class=" z-depth-4 well">
+                    <h4 class="text-center">Login</h4>
+                    <form th:action="@{/user/login}" method="post">
+                        <div th:if="${param.error}" class="text-center" style="color: #8b1014;">
+                            Invalid username or password.
+                        </div>
+                        <div class="form-group ">
+                            <input type="text" th:class="form-control" id="username" th:placeholder="Username" name="username" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password" />
+                        </div>
+                        <div class="form-group" id="login-into-dashboard">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="">
+                    <a class="follow" th:href="@{/}"><i class="fa fa-home fa-2x"></i><span>Return to Home page !</span></a>
+                </div>
+            </div>
         </div>
+
     </div>
+</section>
 </body>
 </html>

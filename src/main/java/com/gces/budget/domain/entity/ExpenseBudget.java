@@ -100,7 +100,7 @@ public class ExpenseBudget {
     private BigDecimal rdActivity;
 
     //Application Procedure for M. Program
-//    @NotNull
+    @NotNull
     private BigDecimal appProcedureMProg;
 
     //Repate for Fee
@@ -126,6 +126,10 @@ public class ExpenseBudget {
     //Project Surplus
     @NotNull
     private BigDecimal projectedSurplus;
+
+    public String getId(){
+        return this.id;
+    }
 
     public String getUserId(){
         return this.userId;

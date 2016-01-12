@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="dashboardLayout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="dashboard-main">
+
+<header th:include="dashboardLayout :: header">
+</header>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:include="dashboardLayout :: sideNav"></div>
+        </div>
+        <div class="col-md-10">
+        <div class="main-contain">
+            <div class="main-title z-depth-1 clearfix">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="z-depth-1">
+                <table class="table table-responsive table-contain">
+                    <thead>
+                    <tr>
+                        <td>S.No.</td>
+                        <td>Fiscal Year</td>
+                        <th>Type</th>
+                        <th>Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2015</td>
+                        <td>Income</td>
+                        <td class="table-option-icon">
+                            <a href="update">
+                                <button class="btn btn-success btn-sm" type="button">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </a>
+                            <a href="delete">
+                                <button class="btn btn-danger btn-sm" type="button">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    </div>
+</section>
+
+<footer th:include="dashboardLayout :: footer">
+</footer>
+</body>
+</html>

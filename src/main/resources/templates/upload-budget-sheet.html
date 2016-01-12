@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="dashboardLayout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="dashboard-main">
+<header th:include="dashboardLayout :: header">
+</header>
+<section class="container-fluid dashboard-main">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:include="dashboardLayout :: sideNav"></div>
+        </div>
+        <div class="col-md-10">
+            <div class="main-contain">
+                <div class="main-title z-depth-1 clearfix">
+                    <h5><i class="fa fa-cloud-upload">&nbsp;</i> <span th:text="${sectionTitle}"></span> </h5>
+                </div>
+                <div class="z-depth-1">
+
+                    <div class="row">
+                        <div class=" form-content">
+                            <form th:action="${income}? '/dashboard/upload-income-budget-sheet' :'/dashboard/upload-expense-budget-sheet'"
+                                  method="post" th:object="${budget}" enctype="multipart/form-data">
+                                <div class="ow" th:if="${#fields.hasErrors('*')}">
+                                    <div class="col-sm-12">
+                                    <p th:each="err : ${#fields.errors('*')}"  th:text="${err}" class="warning"></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="income_file" class="col-sm-3 control-label label-style"
+                                        th:text="${income} ? 'Income Budget Sheet' : 'Expense Budget Sheet'">Income Sheet</label>
+                                    <div class="col-sm-9">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <span class="btn btn-default btn-file">
+                                            <!--/*@thymesVar id="income" type="boolean"*/-->
+                                            <span class="fileinput-new" th:text="${income} ? 'Select Income Budget Sheet' : 'Select Expense Budget Sheet'"></span>
+                                            <span class="fileinput-exists">Change</span>
+                                            <input type="file" id="income_file" name="budgetSheet" th:value="${budget.budgetSheet}"
+                                                   th:field="${budget.budgetSheet}"/>
+                                        <!--<input type="file" id="income-_file" th:value="${budget.budgetSheet}" th:field="${budget.budgetSheet}"-->
+                                               <!--placeholder="Upload Income Budget Sheet" name="budgetSheet" />-->
+                                        </span>
+                                            <span class="fileinput-filename"></span>
+                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput"
+                                               style="float: none">&times;</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fiscalYear" class="col-sm-3 control-label label-style">Fiscal Year</label>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date" id="fiscalYear">
+                                            <input type="text" class="form-control input-date" size="2" th:value="${budget.fiscalYear}" th:field="${budget.fiscalYear}" />
+                                            <div class="input-group-addon calander-icon">
+                                                <span class="fa fa-calendar"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-default">Upload</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    $("#fiscalYear").datepicker({
+        format: "yyyy",
+        startView: 2,
+        minViewMode: 2,
+        clearBtn: true,
+        orientation: "bottom auto",
+        autoclose: true,
+    });
+</script>
+
+</body>
+</html>

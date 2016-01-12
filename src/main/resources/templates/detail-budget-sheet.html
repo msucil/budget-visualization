@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="dashboardLayout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="dashboard-main">
+
+<header th:include="dashboardLayout :: header">
+</header>
+<section class="container-fluid dashboard-main">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:include="dashboardLayout :: sideNav"></div>
+        </div>
+        <div class="col-md-10">
+            <div class="main-contain">
+                <div class="main-title z-depth-1 clearfix">
+                    <h5 class="pull-left" ><i class="fa fa-th">&nbsp;</i><span th:text="${sectionTitle}"></span> </h5>
+                    <div class="pull-right">
+                        <div th:if="${income}">
+                            <a th:href="@{/dashboard/upload-income-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+                        <div th:if="!${income}">
+                            <a th:href="@{/dashboard/upload-expense-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="z-depth-1">
+                    <div th:if="${budget}">
+                        <table class="table table-responsive table-contain">
+                        <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Amount (NRs.)</th>
+                        </tr>
+                        </thead>
+                        <tbody th:if="${income}">
+                        <tr th:if="${budget.appAdmitionFee}">
+                            <td>Applied and Administration Fee</td>
+                            <td th:text="${budget.appAdmitionFee}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.semesterFee}">
+                            <td>Semester Fee per Year</td>
+                            <td th:text="${budget.semesterFee}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.internetLibraryFee}">
+                            <td>Internet &nbsp; Library Fee</td>
+                            <td th:text="${budget.internetLibraryFee}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.photocopyIncome}">
+                            <td>Photocopy Income</td>
+                            <td th:text="${budget.photocopyIncome}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.studentCard}">
+                            <td>Student Card</td>
+                            <td th:text="${budget.studentCard}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.telephoneIncome}">
+                            <td>Telephone Income</td>
+                            <td th:text="${budget.telephoneIncome}"></td>
+                        </tr>
+
+                        <tr th:if="${budget.meiseMasterDegree}">
+                            <td>MEISE Master Degree</td>
+                            <td th:text="${budget.meiseMasterDegree}"></td>
+                        </tr>
+                        <tr th:if="${budget.miscellaneousIncome}">
+                            <td>Certificate/Late Fee/ Misc. Income</td>
+                            <td th:text="${budget.miscellaneousIncome}"></td>
+                        </tr>
+                        </tbody>
+
+                        <tbody th:if="!${income}">
+                            <tr th:if="${budget.repairMaintenance}">
+                                <td>Repair &amp; Maintenance</td>
+                                <td th:text="${budget.repairMaintenance}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.transportationFare}">
+                                <td>Transportation &amp; Fare</td>
+                                <td th:text="${budget.transportationFare}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.telephone}">
+                                <td>Telephone</td>
+                                <td th:text="${budget.telephone}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.internetExpense}">
+                                <td>Internet Expenses</td>
+                                <td th:text="${budget.internetExpense}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.stationaryExamMaterials}">
+                                <td>Stationary/Exam Materials</td>
+                                <td th:text="${budget.stationaryExamMaterials}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.electricity}">
+                                <td>Electricity</td>
+                                <td th:text="${budget.electricity}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.scholarshipAward}">
+                                <td>Scholarship Award</td>
+                                <td th:text="${budget.scholarshipAward}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.advPubRelation}">
+                                <td>Advertisement/Public Relation</td>
+                                <td th:text="${budget.advPubRelation}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.houseRent}">
+                                <td>House Rent</td>
+                                <td th:text="${budget.houseRent}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.newsMagazine}">
+                                <td>Newspaper/Magazine</td>
+                                <td th:text="${budget.newsMagazine}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.libraryBooks}">
+                                <td>Library Books, Ref. Books</td>
+                                <td th:text="${budget.libraryBooks}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.extraCurricular}">
+                                <td>Extra Curricular/Sports Equipment</td>
+                                <td th:text="${budget.extraCurricular}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.sickLeaveOthers}">
+                                <td>Sick Leaves &amp; Others</td>
+                                <td th:text="${budget.sickLeaveOthers}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.furniture}">
+                                <td>Furniture</td>
+                                <td th:text="${budget.furniture}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.depreciation}">
+                                <td>Depreciation</td>
+                                <td th:text="${budget.depreciation}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.salaryAllowances}">
+                                <td>Salary &amp; Allowlances</td>
+                                <td th:text="${budget.salaryAllowances}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.officeEqupComputers}">
+                                <td>Office Equipments/ Computers</td>
+                                <td th:text="${budget.officeEqupComputers}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.gratuity}">
+                                <td>Gratuity</td>
+                                <td th:text="${budget.gratuity}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.internetExpense}">
+                                <td>Internet Expenses</td>
+                                <td th:text="${budget.internetExpense}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.rdActivity}">
+                                <td>R &amp; D Activity</td>
+                                <td th:text="${budget.rdActivity}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.appProcedureMProg}">
+                                <td>Application Procedure for M. Program</td>
+                                <td th:text="${budget.appProcedureMProg}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.rebateForFee}">
+                                <td>Rebate for Fee</td>
+                                <td th:text="${budget.rebateForFee}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.providentFund}">
+                                <td>Provident Fund</td>
+                                <td th:text="${budget.providentFund}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.studentWalefareMahotsav}">
+                                <td>Student Walfare/ IT Mahotsav</td>
+                                <td th:text="${budget.studentWalefareMahotsav}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.otInsurance}">
+                                <td>OT, Insurance, T.A.D.A</td>
+                                <td th:text="${budget.otInsurance}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.miscellaneous}">
+                                <td>Miscellaneous</td>
+                                <td th:text="${budget.miscellaneous}"></td>
+                            </tr>
+
+                            <tr th:if="${budget.projectedSurplus}">
+                                <td>Project Surplus</td>
+                                <td th:text="${budget.projectedSurplus}"></td>
+                            </tr>
+
+
+                        </tbody>
+                        <tfoot th:if="${total}">
+                            <tr>
+                                <td>Total Amount</td>
+                                <td th:text="${total}"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer th:include="dashboardLayout :: footer">
+</footer>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    var budget = [[${budget}]];
+    var total = 0;
+    console.log(budget);
+    $.each(budget, function(name, value){
+        if(name != 'id' && name !='fiscalYear')
+            total += value;
+    });
+    console.log(total);
+    /*]]>*/
+</script>
+</body>
+</html>

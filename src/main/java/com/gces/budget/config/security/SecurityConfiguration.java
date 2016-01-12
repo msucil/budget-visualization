@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 /**
  * Security configuration Class
@@ -39,12 +40,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                    .antMatchers("/","/test","/test/*","/user/signup")
+                    .antMatchers("/","/test","/test/*","/user/signup","/assets/**/*.js","/assets/**/*.css",
+                            "/assets/**/*.jpg","/assets/**/*.png", "/assets/**/*.min.js")
                     .permitAll()
                     .anyRequest()
                 .authenticated().and()
                 .formLogin()
-                    .loginPage("/user/login")
+                    .loginPage("/user/login").defaultSuccessUrl("/dashboard")
                     .permitAll()
                 .and()
                 .logout()
