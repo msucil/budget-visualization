@@ -1,11 +1,13 @@
 package com.gces.budget.service.budget;
 
+import com.gces.budget.domain.dto.BudgetDTO;
 import com.gces.budget.domain.dto.BudgetSheetDTO;
 import com.gces.budget.domain.entity.ExpenseBudget;
 import com.gces.budget.domain.entity.IncomeBudget;
 import com.gces.budget.exception.SheetNotFoundException;
 import com.gces.budget.repository.ExpenseBudgetRepository;
 import com.gces.budget.repository.IncomeBudgetRepository;
+import com.gces.budget.service.budget.analysis.BudgetAnalysisService;
 import com.mongodb.DuplicateKeyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -33,6 +37,8 @@ public class BudgetService {
 
     private ExpenseBudget savedExpenseBudget;
 
+    private BudgetAnalysisService budgetAnalysisService;
+
     private ISheetSerivce sheetService;
 
     MultipartFile file;
@@ -50,6 +56,11 @@ public class BudgetService {
     @Autowired
     public void setSheetService(ISheetSerivce sheetService){
         this.sheetService = sheetService;
+    }
+
+    @Autowired
+    public void setSavedExpenseBudget(BudgetAnalysisService budgetAnalysisService){
+        this.budgetAnalysisService = budgetAnalysisService;
     }
 
 
@@ -200,10 +211,29 @@ public class BudgetService {
         expenseBudgetRepo.delete(sheetId);
     }
 
-    public void getAllTotalIncomeBudget(String userid){
-        List<IncomeBudget> incomeBudgets = incomeBudgetRepo.findAllByUserIdOrderByFiscalYearDesc(userid);
+    public List<BudgetDTO> getAllTotalIncomeBudget(String userid){
+        List<IncomeBudget> incomeBudgets = incomeBudgetRepo.findAllByUserIdOrderByFiscalYearAsc(userid);
+        List<BudgetDTO> budgets = new ArrayList<BudgetDTO>();
+        Iterator<IncomeBudget> incomeBudgetIterator = incomeBudgets.iterator();
 
+        while (incomeBudgetIterator.hasNext()){
+            IncomeBudget incomeBudget = incomeBudgetIterator.next();
+            log.info(incomeBudget.toString());
+            budgets.add(getIncomeBudgetDTO(incomeBudget));
+        }
+
+        return budgets;
 
     }
+
+    public BudgetDTO getIncomeBudgetDTO(IncomeBudget incomeBudget){
+        BudgetDTO budgetDTO = new BudgetDTO();
+        budgetDTO.setFiscalYear(incomeBudget.getFiscalYear());
+        budgetDTO.setTotalAmount(getTotalIncomeBudget(incomeBudget).doubleValue());
+        log.info(budgetDTO.toString());
+        return budgetDTO;
+    }
+
+
 
 }
