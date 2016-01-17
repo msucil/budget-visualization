@@ -12,7 +12,7 @@
     <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet" />
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" th:href="@{/assets/plugin/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/plugin/font-awesome/css/font-awesome.css}" />
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/assets/plugin/mdbootstrap/css/bootstrap.min.css}" rel="stylesheet" />
@@ -32,6 +32,11 @@
     <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/jquery.min.js}" ></script>
     <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/bootstrap.min.js}" ></script>
     <script type="text/javascript" th:src="@{/assets/plugin/mdbootstrap/js/mdb.js}" ></script>
+
+    <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/highcharts.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/exporting.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/export-csv.js}"></script>
+
 </head>
 <body>
     <header th:fragment="header">
@@ -56,51 +61,32 @@
         </div>
     </header>
 
-    <section th:fragment="loginModal">
-        <!--MOdal-->
-        <div class="container">
-            <div class="modal fade" id="modalLogin" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header text-center">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4>Login</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <form action="#" th:action="@{/user/login}" method="post">
-                                    <div class="input-field">
-                                        <input id="icon-email" name="username" placeholder="Username" type="text" class="validate"/>
-                                    </div>
-                                    <div class="input-field">
-                                        <input id="password" placeholder="Password" name="password" type="password" class="validate"/>
-                                    </div>
-                                    <!--<p class="remember-me">-->
-                                        <!--<input type="checkbox" class="filled-in" id="remember-me" />-->
-                                        <!--<label for="remember-me">Remember Me</label>-->
-                                    <!--</p>-->
-                                    <div class="input-field modal-login">
-                                        <input type="submit" class="btn grey darken-1 btn-block waves-light" value="Login"/>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="text-left">
-                                <p><a href="#">Forget Password ?</a></p>
-                                <button class="btn waves-light btn-sm">Register</button>
-                            </div>
-                        </div>
+
+
+    <section th:fragment="footer">
+    <footer class="page-footer elegant-color center-on-small-only" >
+
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="footer-copyright">
+                        2015 &copy; <a href="#"><em>Budget Visualization</em></a>. All Rights Reserved.
                     </div>
                 </div>
+                <div class="col-md-4 col-sm-12 text-center">
+                    <ul class="footer-links white-text">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Visualization</a></li>
+                        <li><a href="#">Analysis</a></li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
-        <!--End of Modal-->
-    </section>
 
-    <footer th:fragment="footer">
-        <p>&copy; Budget Visualization</p>
     </footer>
+    </section>
 
 </body>
 </html>

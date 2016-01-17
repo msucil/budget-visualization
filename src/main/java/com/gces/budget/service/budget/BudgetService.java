@@ -188,6 +188,7 @@ public class BudgetService {
         return expenseBudgetRepo.findAllByUserIdOrderByFiscalYearDesc(userId);
     }
 
+
     public BigDecimal getTotalExpenseBudget(ExpenseBudget expense){
         BigDecimal total = BigDecimal.ZERO;
 
@@ -234,6 +235,45 @@ public class BudgetService {
         return budgetDTO;
     }
 
+    public IncomeBudget getLatestIncomeBudget(String userId){
+        IncomeBudget incomeBudget = incomeBudgetRepo.findOneByUserIdOrderByFiscalYearDesc(userId);
+        if(incomeBudget == null){
+            throw new SheetNotFoundException("Sorry! No Income Budget!");
+        }
+        else{
+            return incomeBudget;
+        }
 
+    }
+
+    public ExpenseBudget getLatestExpenseBudget(String userId){
+        ExpenseBudget expenseBudget = expenseBudgetRepo.findOneByUserIdOrderByFiscalYearDesc(userId);
+        if(expenseBudget == null){
+            throw new SheetNotFoundException("Sorry! No Income Budget!");
+        }
+        else{
+            return expenseBudget;
+        }
+    }
+
+    public IncomeBudget getIncomeBudgetByYear(String year, String userId){
+        IncomeBudget incomeBudget = incomeBudgetRepo.findOneByFiscalYearAndUserId(year, userId);
+        if(incomeBudget == null){
+            throw new SheetNotFoundException("Sorry! No Income Budget!");
+        }
+        else{
+            return incomeBudget;
+        }
+    }
+
+    public ExpenseBudget getExpenseBudgetByYear(String year, String userId){
+        ExpenseBudget expenseBudget = expenseBudgetRepo.findOneByFiscalYearAndUserId(year, userId);
+        if(expenseBudget == null){
+            throw new SheetNotFoundException("Sorry! No Income Budget!");
+        }
+        else{
+            return expenseBudget;
+        }
+    }
 
 }

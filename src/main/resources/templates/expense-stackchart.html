@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+            <!--left column-->
+            <div class="col-md-3">
+                <div class=" right-content">
+                    <div class="chart-icons text-center">
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/barchart}">
+                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
+                        </a>
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/piechart}">
+                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/stackchart}">
+                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!--left column ends -->
+            <!--div for chart-->
+            <div class="col-md-9">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budget = [[${budget}]];
+        var totalBudget = [[${totalBudget}]];
+        console.log(budget);
+        console.log(totalBudget);
+$(function () {
+    $('#chart').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Stacked Column Chart'
+        },
+        xAxis: {
+            categories: [budget.fiscalYear]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Amount (NRs.)'
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0,
+            itemMarginTop: 5,
+            itemMarginBottom: 5,
+            itemStyle: {
+                lineHeight: '14px',
+                fontSize:'15px',
+                fontWeight: '200'
+
+            },
+            symbolHeight: 12,
+            symbolWidth: 12,
+            symbolRadius: 6
+        },
+        credits:{
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Repair & Maintenance',
+            data: [budget.repairMaintenance],
+
+        }, {
+            name: 'Transportation Fare',
+            data: [budget.transportationFare]
+        }, {
+            name: 'Telephone',
+            data: [budget.telephone]
+        }, {
+            name: 'Internal Expenses',
+            data: [budget.internetExpense]
+        }, {
+            name: 'Stationary/Exam Materials',
+            data: [budget.stationaryExamMaterials]
+        }, {
+            name: 'Electricity',
+            data: [budget.electricity]
+        },{
+            name: 'Scholarship Award',
+            data: [budget.scholarshipAward]
+        },{
+            name : 'Advertisement/Public Relation',
+            data : [budget.advPubRelation]
+        },{
+            name : 'House Rent',
+            data : [budget.houseRent]
+        },{
+            name : 'Newspaper/Magazine',
+            data : [budget.newsMagazine]
+        },{
+            name : "Library Books, Ref. Books",
+            data : [budget.libraryBooks]
+        },{
+            name : "Extra Curricular/Sports Equipment",
+            data : [budget.extraCurricular]
+        },{
+            name : "Sick Leave & Others",
+            data : [budget.sickLeaveOthers]
+        },{
+            name : "Furniture",
+            data : [budget.furniture]
+        },{
+            name : "Depreciation",
+            data : [budget.depreciation]
+        },{
+            name : "Salary & Allowances",
+            data : [budget.salaryAllowances]
+        },{
+            name : "Office Equipment/ Computers",
+            data : [budget.officeEqupComputers]
+        },{
+            name : "Gratuity",
+            data : [budget.gratuity]
+        },{
+            name : "R & D Activity",
+            data : [budget.rdActivity]
+        },{
+            name : "Application Procedure for M. Program",
+            data : [budget.appProcedureMProg]
+        },{
+            name : "Office Equipment/ Computers",
+            data : [budget.officeEqupComputers]
+        },{
+            name : "Rebate for Fee",
+            data : [budget.rebateForFee]
+        },{
+            name : "Provident Fund",
+            data : [budget.providentFund]
+        },{
+            name : "Student Walefare / IT Mahotsab",
+            data : [budget.studentWalefareMahotsav]
+        },{
+            name : "OT, Insurance, T.A.D.A",
+            data : [budget.otInsurance]
+        },{
+            name : "Office Equipment/ Computers",
+            data : [budget.miscellaneous]
+        },{
+            name : "Project Surplus",
+            data : [budget.projectedSurplus]
+        }
+        ]
+    });
+});
+        /*]]>*/
+    </script>
+
+</body>
+</html>

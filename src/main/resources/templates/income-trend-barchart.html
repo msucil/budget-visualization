@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+            <!--left column-->
+            <div class="col-md-3">
+                <div class=" right-content">
+                    <div class="chart-icons text-center">
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/barchart}">
+                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
+                        </a>
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/piechart}">
+                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/stackchart}">
+                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!--left column ends -->
+            <!--div for chart-->
+            <div class="col-md-9">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budget = [[${budget}]];
+        var budgets = [[${budgets}]];
+        var series = [];
+        budgets.forEach(function(budget,i){
+            var obj = new Object({
+                'name' : budget.fiscalYear,
+                'data' : [budget.appAdmitionFee,budget.semesterFee,budget.internetLibraryFee,budget.photocopyIncome,
+                    budget.studentCard,budget.telephoneIncome,budget.miscellaneousIncome,budget.meiseMasterDegree
+                ]
+            });
+            series.push(obj);
+//            series[i] = budget;
+//            console.log(i);
+        });
+        series.forEach(function(s){
+            console.log(s);
+        });
+        console.log(series);
+        var totalBudget = [[${totalBudget}]];
+//        console.log(budgets);
+//        console.log(totalBudget);
+
+        $(function () {
+            $('#chart').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Stacked Bar Chart'
+                },
+                xAxis: {
+                    categories: ['Appli/Admition Fee', 'Semester Fee per Year', 'Internet & Library fee',
+                        'Photocopy Income', 'Student Card','Telephone','Cert/late Fee/Mis. Income','MEISE Master Degree']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: ''
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                credits:{
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal'
+                    }
+                },
+                series: series
+//                        [{
+//                    name: 'John',
+//                    data: [5, 3, 4, 7, 2]
+//                }, {
+//                    name: 'Jane',
+//                    data: [2, 2, 3, 2, 1]
+//                }, {
+//                    name: 'Joe',
+//                    data: [3, 4, 4, 2, 5]
+//                }]
+            });
+        });
+
+        /*
+        $(function () {
+            $('#chart').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0,
+                    itemMarginTop: 5,
+                    itemMarginBottom: 5,
+                    itemStyle: {
+                        lineHeight: '14px',
+                        fontSize:'15px',
+                        fontWeight: '200'
+
+                    },
+                    symbolHeight: 12,
+                    symbolWidth: 12,
+                    symbolRadius: 6
+                },
+                credits:{
+                    enabled: false
+                },
+                title: {
+                    text:'Bar chart'
+                },
+                xAxis: {
+                    categories: [
+                        budget.fiscalYear
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Amount (NRs.)'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>NRs. {point.y:.2f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Appli/Admition Fee',
+                    data: [budget.appAdmitionFee]
+
+                }, {
+                    name: 'Semester Fee per Year',
+                    data: [budget.semesterFee]
+
+                }, {
+                    name: 'Internet & Library fee',
+                    data: [budget.internetLibraryFee]
+
+                }, {
+                    name: 'Photocopy Income',
+                    data: [budget.photocopyIncome]
+
+                },{
+                    name: 'Student Card',
+                    data: [budget.studentCard]
+                },{
+                    name : 'Telephone',
+                    data : [budget.telephoneIncome]
+                },{
+                    name: 'Cert/late Fee/Mis. Income',
+                    data : [budget.miscellaneousIncome]
+                },{
+                    name : 'MEISE Master Degree',
+                    data : [budget.meiseMasterDegree]
+                }
+                ]
+            });
+        });
+        */
+
+
+        /*]]>*/
+    </script>
+
+</body>
+</html>

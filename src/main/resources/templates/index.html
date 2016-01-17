@@ -25,9 +25,10 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html" th:href="@{/}" title="Home">Home <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#" th:href="@{visualize}" title="Visualization">Visualization</a></li>
-                        <li><a href="analysis.html" th:href="@{analyse-budget}" title="Analysis">Analysis</a></li>
+                        <li class="active"><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#" th:href="@{/visualize/income}" >Visualization</a></li>
+                        <li><a href="#" th:href="@{/budget-trend/income}" >Budget Trend</a></li>
+                        <li><a href="analysis.html" th:href="@{analyse-budget}" >Budget Projection</a></li>
                     </ul>
                     <!--Login in button-->
                     <ul class="nav navbar-nav navbar-right">
@@ -38,7 +39,7 @@
                             </form>
                         </li>
                         <li sec:authorize="!isAuthenticated()">
-                            <a href="#" data-toggle="modal" data-target="#modalLogin" title="Login">Login</a>
+                            <a th:href="@{/user/login}" title="Login">Login</a>
                         </li>
                         <li sec:authorize="!isAuthenticated()">
                             <a th:href="@{/user/signup}" title="Register">Register</a>
@@ -54,51 +55,81 @@
         <!--end for nav bar section-->
     </header>
 
-    <section th:include="layout :: loginModal">
-
-    </section>
-
-    <div class="main-content">
+    <section class="main-content">
         <div class="container-full">
             <div class="banner-img">
-                <img th:src="@{/assets/img/banner2.jpg}" alt="full width banner"/>
+                <img th:src="@{/assets/img/banner.jpg}" alt="full width banner"/>
             </div>
         </div>
-        <div class="rgba-grey-lighten-5 spacing">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <h3>Heading</h3>
+    </section>
+
+    <section class="container">
+        <section class="rgba-grey-lighten-5">
+            <section class="row text-center">
+                <div class="card">
+                    <div class="col-md-6 index-side-content">
+                        <h3 class="">Easy Upload</h3>
                         <p>
-                            short description about the side incomes and revenue of the certain year.short description about the side incomes and revenue of the certain year.
-                            short description about the side incomes and revenue of the certain year.short description about the side incomes and revenue of the certain year.
-                            short description about the side incomes and revenue of the certain year.
+                            Upload excel sheet of budget to visualize and analysis makes it easier.
                         </p>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6 index-icons elegant-color ">
+                        <i class="fa fa-file-excel-o fa-3x z-depth-1"></i>
+                        <i class="fa fa-laptop fa-3x z-depth-1"></i>
+                        <i class="fa fa-cloud-upload fa-3x z-depth-1"></i>
+                    </div>
+                </div>
+            </section>
+            <section class="row text-center">
+                <div class="card">
+                    <div class="col-md-6 index-icons elegant-color">
+                        <i class="fa fa-area-chart fa-3x z-depth-1"></i>
+                        <i class="fa fa-bar-chart-o fa-3x z-depth-1"></i>
+                        <i class="fa fa-pie-chart fa-3x z-depth-1"></i>
+
+                    </div>
+                    <div class="col-md-6 index-side-content">
+                        <h3>Visualize Instantly</h3>
+                        <p>Every paper analysis makes its borden. So, visualize all the document right in time. </p>
 
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+            <section class="row text-center">
+                <div class="card">
+                    <div class="col-md-6 index-side-content">
+                        <h3 class="text-center">Export Graph Easily</h3>
+                        <p>
+                            Download data of budget sheet into png, img, pdf.
+                        </p>
+                    </div>
+                    <div class="col-md-6 index-icons elegant-color">
+                        <i class="fa fa-picture-o fa-3x z-depth-1"></i>
+                        <i class="fa fa-file-pdf-o fa-3x z-depth-1"></i>
+                        <i class="fa fa-file fa-3x z-depth-1"></i>
+                    </div>
+                </div>
+            </section>
+            <section class="row text-center">
+                <div class=" card">
+                    <div class="col-md-6 index-icons elegant-color">
+                        <i class="fa fa-filter fa-3x z-depth-1"></i>
+                        <i class="fa fa-cubes fa-3x z-depth-1"></i>
+                        <i class="fa fa-calendar-check-o fa-3x z-depth-1"></i>
 
-
-    </div>
-
-
-
-    <section>
-        <div class="col-lg-12">
-            <h2>Your BI Partner</h2>
-            <h3 th:text="${pageTitle}">Page Title</h3>
-            <div sec:authorize="isAuthenticated()">
-                You are Welcome
-            </div>
-            <div sec:authorize="!isAuthenticated()">You Are Guest</div>
-        </div>
+                    </div>
+                    <div class="col-md-6 index-side-content">
+                        <h3>Analyse data Instantly</h3>
+                        <p>
+                            Viewing all your data of budget through various graph which make you easier to analysis your data.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            </section>
     </section>
 
-    <footer th:include="layout :: footer">
+    <footer th:replace="layout :: footer">
     </footer>
 </body>
 </html>

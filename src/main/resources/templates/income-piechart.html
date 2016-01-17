@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+            <!--left column-->
+            <div class="col-md-3">
+                <div class=" right-content">
+                    <div class="chart-icons text-center">
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/barchart}">
+                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
+                        </a>
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/piechart}">
+                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/stackchart}">
+                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!--left column ends -->
+            <!--div for chart-->
+            <div class="col-md-9">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budget = [[${budget}]];
+        var totalBudget = [[${totalBudget}]];
+        console.log(budget);
+        console.log(totalBudget);
+
+        $(function () {
+            $('#chart').highcharts( {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie',
+                    backgroundColor: 'transparent'
+                },
+                title: {
+                    text: 'Pie Chart'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b><br/>Rs.{point.amount} ({point.percentage:.4f}%)',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || "black"
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0,
+                    itemMarginTop: 5,
+                    itemMarginBottom: 5,
+                    itemStyle: {
+                        lineHeight: '14px',
+                        fontSize:'15px',
+                        fontWeight: '200'
+
+                    },
+                    symbolHeight: 12,
+                    symbolWidth: 12,
+                    symbolRadius: 6
+                },
+                credits:{
+                    enabled: false
+                },
+                series: [{
+                    name: 'Percentage',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Appli/Admition Fee',
+                        amount: budget.appAdmitionFee,
+                        y: (budget.appAdmitionFee/totalBudget) * 100
+                    }, {
+                        name: 'Semester Fee per Year',
+                        amount: budget.semesterFee,
+                        y: (budget.semesterFee/totalBudget) * 100,
+                        sliced: true,
+                        selected: true
+                    }, {
+                        name: 'Internet & Library fee',
+                        amount: budget.internetLibraryFee,
+                        y: (budget.internetLibraryFee/totalBudget) * 100
+                    }, {
+                        name: 'Photocopy Income',
+                        amount: budget.photocopyIncome,
+                        y: (budget.photocopyIncome/totalBudget) * 100
+                    }, {
+                        name: 'Student Card',
+                        amount: budget.studentCard,
+                        y: (budget.studentCard/totalBudget) * 100
+                    }, {
+                        name: 'Telephone',
+                        amount: budget.telephoneIncome,
+                        y: (budget.telephoneIncome/totalBudget) * 100
+                    },{
+                        name: 'Cert/late Fee/Mis. Income',
+                        amount: budget.miscellaneousIncome,
+                        y: (budget.miscellaneousIncome/totalBudget) * 100
+                    },{
+                        name : 'MEISE Master Degree',
+                        amount : budget.meiseMasterDegree,
+                        y : (budget.meiseMasterDegree/totalBudget) * 100
+                    }]
+                }]
+            });
+
+        });
+        /*]]>*/
+    </script>
+
+</body>
+</html>

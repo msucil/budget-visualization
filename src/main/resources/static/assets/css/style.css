@@ -26,7 +26,7 @@
     color:#eeeeee;
 }
 .navbar-right p i{
-    padding: 0px 8px;
+    padding: 0 8px;
     color: #ffffff;
 }
 /*end of nav bar*/
@@ -83,11 +83,30 @@
 /*end of the image section*/
 /*spacing between two divs*/
 .spacing{
-    padding-top: 50px;
-    padding-left: 30px;
-    padding-right: 30px;
+    /*padding-top: 50px;*/
+    /*padding-left: 30px;*/
+    /*padding-right: 30px;*/
+    margin: 25px 0;
+}
+.spacing-index{
+    padding: 5% 0;
+
 }
 /*end of spacing section*/
+/*icons section*/
+.index-side-content{
+    padding: 2% 1%;
+}
+.index-icons{
+    padding: 5% 0;
+}
+.index-icons i{
+    margin: 15px;
+    background-color: #EB5546;
+    color: #F5F5F5;
+    padding: 3%;
+}
+/*end of icons section*/
 /*for footer*/
 footer.page-footer{
     margin-top: 0;
@@ -136,11 +155,54 @@ footer.page-footer{
     background-color: #fafafa;
 }
 .main-container{
-    padding-top: 100px;
+    padding-top: 90px;
 }
 .navbar-nav-color{
     background-color: #616161;
 }
+/*for analysis page*/
+/*nav bar color for analysis*/
+.navbar-nav-color1{
+    background: #E13D2E  none repeat scroll 0 0;
+}
+.main-container1{
+    padding: 8% 0 2%;
+    background-color: #616161;
+    color: whitesmoke;
+    /*text-shadow: 10px 10px 10px black;*/
+    text-shadow: 2px 5px 5px rgb(29, 29, 29);
+    font-weight: 500;
+}
+.chart-heading{
+    margin: 1% 7%;
+    /*border: 2px solid #898989;*/
+    padding: 1.5%;
+}
+/*for select plugin*/
+.select2-container--default .select2-selection--single {
+    border-radius: 0;
+}
+/*end of select plugin*/
+/**/
+.effect6
+{
+    position:relative;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect6:before, .effect6:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    border-radius:100px / 10px;
+}
+/**/
+/*end for analysis page*/
 .heading-visualization{
     padding: 0 0 10px 0;
 }
@@ -158,49 +220,19 @@ footer.page-footer{
 }
 /*end of visualization page*/
 /*analysis page*/
-.range-slider{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin-bottom: 50px;
+.right-content{
+    padding: 30px 20px;
 }
-.irs-from, .irs-to, .irs-single {
-    background: rgb(99, 203, 144) none repeat scroll 0% 0%;
-}
-.irs-from::after, .irs-to::after, .irs-single::after {
-    border-color: rgb(99, 203, 144) transparent transparent;
-}
-.side-content {
-    width: 81%;
-    margin-left: 1%;
-}
-.right-bar{
-    padding-right: 0;
-}
-.download-files{
-    margin-bottom: 15%;
-}
-.download-files ul li a{
-    color: #333333;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.download-files ul li a:hover, .download-files ul li a:focus{
-    color: gray;
-}
-.dropdown-menu{
-    min-width: 80px;
-}
-.dropdown-menu li a{
-    color: #333333;
-    padding: 5px 10px;
-    font-size: 1rem;
-}
-
 /*circle button*/
 .btn-floating.btn-large i {
-    line-height: 52.5px;
+    line-height: 49px !important;
+    font-size: 1.5rem;
 }
-.btn-floating.btn-large {
-    width: 52.5px;
-    height: 52.5px;
+
+.btn-danger{
+    background-color: #E93939;
+    width: 48px !important;
+    height: 48px !important;
 }
 /*end of circle button*/
 .chart-icons{
@@ -208,26 +240,6 @@ footer.page-footer{
 }
 .chart-icons a{
     margin: 3px;
-}
-.color-component-chart ul li p span{
-    font-size: 13px;
-    padding-right: 10px;
-    margin-bottom: 0;
-    color: green;
-}
-.color-component-chart h5{
-    font-size: large;
-}
-.color-component-chart ul {
-    margin: 20px 0 20px 20px;
-}
-
-.color-component-chart ul li p{
-    margin-bottom: 4px;
-    font-size: medium;
-    font-weight: 300;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
 }
 .top-content p{
     padding-bottom: 20px;
@@ -257,6 +269,11 @@ footer.page-footer{
 }
 .table-section{
     margin-top: 2%;
+    margin-bottom: 5%;
+}
+.table-section table thead{
+    color: white;
+    background-color: rgb(101, 101, 101);
 }
 .table{
     width: 100%;
@@ -314,7 +331,7 @@ footer.page-footer{
     font-size: 1.5em;
 }
 .dashboard-main{
-    /*padding: 0px 0px 10px;*/
+    padding: 0px 0px 10px;
     background-color: whitesmoke;
 }
 .elegant-color{
@@ -322,6 +339,7 @@ footer.page-footer{
 }
 .side-link{
     margin-bottom: 10px;
+    min-height: 515px;
 }
 .side-link ul li{
     padding: 10px;
@@ -362,7 +380,7 @@ table{
 }
 /*upload page*/
 .form-content{
-    margin-left: 20px;
+   margin-left: 20px;
     margin-top: 40px;
 }
 
@@ -399,7 +417,7 @@ table{
     background: #414141;
 }
 #dashboard-login{
-    margin-top: 15%;
+    margin-top: 30%;
 }
 #dashboard-login h4{
     margin: 40px 0;
@@ -416,7 +434,7 @@ table{
     display: inline-block;
     margin: 50px calc(50% - 21px);
     white-space: nowrap;
-    padding: 8px;
+    padding: 11px;
     box-sizing: border-box;
     color: #414141;
     transition: all 0.2s ease;
@@ -426,17 +444,54 @@ table{
 
 }
 .follow i {
-    margin-right: 10px;
+    margin-right: 20px;
     transition: margin-right 0.2s ease;
-    /*font-size: 20px;*/
-    /*padding: px;*/
+    font-size: 20px;
+    padding: px;
 }
 .follow:hover{
-    width: auto;
+    width: 145px;
     transform: translateX(-50px);
     color: #414141;
 }
 .follow:hover i{
-    /*margin-right: 10px;*/
+    margin-right: 10px;
 }
 /*dashboard login ends*/
+
+.box {
+    width:70%;
+    height:200px;
+    background:#FFF;
+    margin:40px auto;
+}
+
+.box h3{
+    text-align:center;
+    position:relative;
+    top:80px;
+}
+.effect5{
+    position: relative;
+}
+
+.effect5::before, .effect5::after
+{
+    z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 50px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width:300px;
+    /*background: #777;*/
+    box-shadow: 0 35px 20px #777;
+    transform: rotate(-8deg);
+}
+.effect5::after
+{
+    transform: rotate(8deg);
+    right: 10px;
+    left: auto;
+}

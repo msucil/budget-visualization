@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+            <!--left column-->
+            <div class="col-md-3">
+                <div class=" right-content">
+                    <div class="chart-icons text-center">
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/barchart}">
+                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
+                        </a>
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/piechart}">
+                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/stackchart}">
+                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!--left column ends -->
+            <!--div for chart-->
+            <div class="col-md-9">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budget = [[${budget}]];
+        var totalBudget = [[${totalBudget}]];
+        console.log(budget);
+        console.log(totalBudget);
+
+        $(function () {
+            $('#chart').highcharts( {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie',
+                    backgroundColor: 'transparent'
+                },
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b><br/>Rs.{point.amount} ({point.percentage:.4f}%)',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || "black"
+                            }
+                        },
+                        showInLegend: true
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0,
+                    itemMarginTop: 5,
+                    itemMarginBottom: 5,
+                    itemStyle: {
+                        lineHeight: '14px',
+                        fontSize:'15px',
+                        fontWeight: '200'
+
+                    },
+                    symbolHeight: 12,
+                    symbolWidth: 12,
+                    symbolRadius: 6
+                },
+                credits:{
+                    enabled: false
+                },
+                series: [{
+                    name: 'Percentage',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Repair & Maintenance',
+                        amount: budget.repairMaintenance,
+                        y: (budget.repairMaintenance/totalBudget) * 100
+                    }, {
+                        name: 'Transportation Fare',
+                        amount: budget.transportationFare,
+                        y: (budget.transportationFare/totalBudget) * 100,
+                        sliced: true,
+                        selected: true
+                    }, {
+                        name: 'Telephone',
+                        amount: budget.telephone,
+                        y: (budget.telephone/totalBudget) * 100
+                    }, {
+                        name: 'Internal Expenses',
+                        amount: budget.internetExpense,
+                        y: (budget.internetExpense/totalBudget) * 100
+                    }, {
+                        name: 'Stationary/Exam Materials',
+                        amount: budget.stationaryExamMaterials,
+                        y: (budget.stationaryExamMaterials/totalBudget) * 100
+                    }, {
+                        name: 'Electricity',
+                        amount: budget.electricity,
+                        y: (budget.electricity/totalBudget) * 100
+                    },{
+                        name: 'Scholarship Award',
+                        amount: budget.scholarshipAward,
+                        y: (budget.scholarshipAward/totalBudget) * 100
+                    },{
+                        name : 'Advertisement/Public Relation',
+                        amount : budget.advPubRelation,
+                        y : (budget.advPubRelation/totalBudget) * 100
+                    },{
+                        name : 'House Rent',
+                        amount : budget.houseRent,
+                        y : (budget.houseRent/totalBudget) * 100
+                    },{
+                        name : 'Newspaper/Magazine',
+                        amount : budget.newsMagazine,
+                        y : (budget.newsMagazine/totalBudget) * 100
+                    },{
+                        name : "Library Books, Ref. Books",
+                        amount : budget.libraryBooks,
+                        y : (budget.libraryBooks/totalBudget) * 100
+                    },{
+                        name : "Extra Curricular/Sports Equipment",
+                        amount : budget.extraCurricular,
+                        y : (budget.extraCurricular/totalBudget) * 100
+                    },{
+                        name : "Sick Leave & Others",
+                        amount : budget.sickLeaveOthers,
+                        y : (budget.sickLeaveOthers/totalBudget) * 100
+                    },{
+                        name : "Furniture",
+                        amount : budget.furniture,
+                        y : (budget.sickLeaveOthers/totalBudget) * 100
+                    },{
+                        name : "Depreciation",
+                        amount : budget.depreciation,
+                        y : (budget.depreciation/totalBudget) * 100
+                    },{
+                        name : "Salary & Allowances",
+                        amount : budget.salaryAllowances,
+                        y : (budget.salaryAllowances/totalBudget) * 100
+                    },{
+                        name : "Office Equipment/ Computers",
+                        amount : budget.officeEqupComputers,
+                        y : (budget.officeEqupComputers/totalBudget) * 100
+                    },{
+                        name : "Gratuity",
+                        amount : budget.gratuity,
+                        y : (budget.gratuity/totalBudget) * 100
+                    },{
+                        name : "R & D Activity",
+                        amount : budget.rdActivity,
+                        y : (budget.rdActivity/totalBudget) * 100
+                    },{
+                        name : "Application Procedure for M. Program",
+                        amount : budget.appProcedureMProg,
+                        y : (budget.appProcedureMProg/totalBudget) * 100
+                    },{
+                        name : "Office Equipment/ Computers",
+                        amount : budget.officeEqupComputers,
+                        y : (budget.officeEqupComputers/totalBudget) * 100
+                    },{
+                        name : "Rebate for Fee",
+                        amount : budget.rebateForFee,
+                        y : (budget.rebateForFee/totalBudget) * 100
+                    },{
+                        name : "Provident Fund",
+                        amount : budget.providentFund,
+                        y : (budget.providentFund/totalBudget) * 100
+                    },{
+                        name : "Student Walefare / IT Mahotsab",
+                        amount : budget.studentWalefareMahotsav,
+                        y : (budget.studentWalefareMahotsav/totalBudget) * 100
+                    },{
+                        name : "OT, Insurance, T.A.D.A",
+                        amount : budget.otInsurance,
+                        y : (budget.otInsurance/totalBudget) * 100
+                    },{
+                        name : "Office Equipment/ Computers",
+                        amount : budget.miscellaneous,
+                        y : (budget.miscellaneous/totalBudget) * 100
+                    },{
+                        name : "Project Surplus",
+                        amount : budget.projectedSurplus,
+                        y : (budget.projectedSurplus/totalBudget) * 100
+                    }]
+
+                }]
+            });
+
+        });
+        /*]]>*/
+    </script>
+
+</body>
+</html>

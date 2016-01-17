@@ -40,8 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                    .antMatchers("/","/test","/test/*","/user/signup","/assets/**/*.js","/assets/**/*.css",
-                            "/assets/**/*.jpg","/assets/**/*.png", "/assets/**/*.min.js")
+                    .antMatchers("/","/test","/test/*","/user/signup","/assets/**/*.js","/assets/**/*.css","/assets/**/*min.css",
+                            "/assets/**/*.jpg","/assets/**/*.png", "/assets/**/*.min.js", "/assets/**")
                     .permitAll()
                     .anyRequest()
                 .authenticated().and()
@@ -52,8 +52,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .logout()
                     .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/user/login");
-
-
     }
 
     @Override

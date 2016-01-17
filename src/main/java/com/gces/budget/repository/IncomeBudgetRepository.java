@@ -16,6 +16,8 @@ public interface IncomeBudgetRepository extends MongoRepository<IncomeBudget, St
 
     public IncomeBudget findOneByFiscalYearAndUserId(String fiscalYear,String userId);
 
+    public IncomeBudget findOneByUserIdOrderByFiscalYearDesc(String userid);
+
     public List<IncomeBudget> findAllByUserIdOrderByFiscalYearDesc(String userId);
 
     public List<IncomeBudget> findAllByUserIdOrderByFiscalYearAsc(String userId);
