@@ -87,7 +87,7 @@ public class ExpenseBudget {
     @NotNull
     private BigDecimal salaryAllowances;
 
-    // Office Equipement/ Computers
+    // Office Equipment/ Computers
     @NotNull
     private BigDecimal officeEqupComputers;
 
@@ -103,7 +103,7 @@ public class ExpenseBudget {
     @NotNull
     private BigDecimal appProcedureMProg;
 
-    //Repate for Fee
+    //Rebate for Fee
     @NotNull
     private BigDecimal rebateForFee;
 

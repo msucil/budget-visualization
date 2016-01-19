@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>WebErrorController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(128,128,128); font-style: italic; }
+.s1 { color: rgb(0,0,0); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+WebErrorController.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">//package com.gces.budget.web;</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">//import org.slf4j.Logger;</span><span class="s1"> 
+</span><span class="s0">//import org.slf4j.LoggerFactory;</span><span class="s1"> 
+</span><span class="s0">//import org.springframework.boot.autoconfigure.web.ErrorController;</span><span class="s1"> 
+</span><span class="s0">//import org.springframework.stereotype.Controller;</span><span class="s1"> 
+</span><span class="s0">//import org.springframework.ui.Model;</span><span class="s1"> 
+</span><span class="s0">//import org.springframework.web.bind.annotation.RequestMapping;</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">//import javax.servlet.http.HttpServletRequest;</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">///**</span><span class="s1"> 
+</span><span class="s0">// * Created by minamrosh on 11/22/15.</span><span class="s1"> 
+</span><span class="s0">// */</span><span class="s1"> 
+</span><span class="s0">//@Controller</span><span class="s1"> 
+</span><span class="s0">//public class WebErrorController implements ErrorController{</span><span class="s1"> 
+</span><span class="s0">//    private final Logger log = LoggerFactory.getLogger(WebErrorController.class);</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">//    @RequestMapping(&quot;/error&quot;)</span><span class="s1"> 
+</span><span class="s0">//    public String displayError(HttpServletRequest request, Exception ex,Model model){</span><span class="s1"> 
+</span><span class="s0">//        log.info(ex.getLocalizedMessage());</span><span class="s1"> 
+</span><span class="s0">//        log.info(&quot;status &quot;+ request.getAttribute(&quot;javax.servlet.error.status_code&quot;));</span><span class="s1"> 
+</span><span class="s0">//        model.addAttribute(&quot;status&quot;,ex.getMessage());</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">//        return &quot;error&quot;;</span><span class="s1"> 
+</span><span class="s0">//    }</span><span class="s1"> 
+</span><span class="s0">//</span><span class="s1"> 
+</span><span class="s0">//    @Override</span><span class="s1"> 
+</span><span class="s0">//    public String getErrorPath() {</span><span class="s1"> 
+</span><span class="s0">//        return &quot;/error&quot;;</span><span class="s1"> 
+</span><span class="s0">//    }</span><span class="s1"> 
+</span><span class="s0">//}</span><span class="s1"> 
+</span></pre>
+</body>
+</html>

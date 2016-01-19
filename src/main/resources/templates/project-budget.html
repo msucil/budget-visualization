@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+
+            <!--div for chart-->
+            <div class="col-md-12">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budgets = [[${budgets}]];
+        var x1 = [[${x1}]];
+        var y1 = [[${y1}]];
+        var x2 = [[${x2}]];
+        var y2 = [[${y2}]];
+        var interval = [[${interval}]];
+        console.log(interval);
+        var year = [];
+        var objs = [];
+
+        budgets.forEach(function(data,i){
+            year[i+1] = data.fiscalYear;
+            objs[i+1] = data.totalAmount;
+            console.log(data);
+        });
+
+        objs[0] = 0;
+
+         console.log(year);
+
+        $(function () {
+            $('#chart').highcharts({
+                xAxis: {
+                    min: 1,
+                    max: year.length,
+                    categories : year
+                },
+                yAxis: {
+                    min: 1
+                },
+                title: {
+                    text: 'Scatter plot with regression line'
+                },
+                plotOptions: {
+                    scatter: {
+                        marker: {
+                            radius: 5,
+                            states: {
+                                hover: {
+                                    enabled: true,
+                                    lineColor: 'rgb(100,100,100)'
+                                }
+                            }
+                        },
+                        states: {
+                            hover: {
+                                marker: {
+                                    enabled: false
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<b>{series.name}</b><br>',
+                            pointFormat: '{point.y} kg'
+                        }
+                    }
+                },
+                series: [{
+                    type: 'line',
+                    name: 'Regression Line',
+                    data: [[x1, y1], [x2, y2]],
+                    marker: {
+                        enabled: false
+                    },
+                    states: {
+                        hover: {
+                            lineWidth: 0
+                        }
+                    },
+                    enableMouseTracking: false
+                }, {
+                    type: 'scatter',
+                    name: 'Budget',
+                    data: objs,
+                    marker: {
+                        radius: 4
+                    }
+                }]
+            });
+        });
+
+
+        /*]]>*/
+    </script>
+
+</body>
+</html>

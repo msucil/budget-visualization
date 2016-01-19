@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="layout :: headSection(${pageTitle})">
+    <meta charset="UTF-8" />
+    <title th:text="Home"> Home : Budget Visualization</title>
+</head>
+<body class="rgba-grey-lighten-5">
+
+    <header th:replace="visualizeLayout::navbar">
+    </header>
+
+    <section class="container-fluid main-container1 spacing z-depth-1">
+        <div class="top-content effect6">
+            <h3 class="h3-responsive text-center chart-heading" th:text="${sectionTitle}">Pie Chart view of Income Budget for Fiscal Year 2068/69</h3>
+        </div>
+    </section>
+    <div class="container-fluid spacing">
+        <div class="row">
+            <!--left column-->
+            <div class="col-md-3">
+                <div class=" right-content">
+                    <div class="chart-icons text-center">
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/barchart}">
+                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
+                        </a>
+                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/piechart}">
+                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/stackchart}">
+                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    </div>
+                </div>
+
+            </div>
+            <!--left column ends -->
+            <!--div for chart-->
+            <div class="col-md-9">
+                <div class="z-depth-1">
+                    <div id="chart" style="max-width: 1010px; height: 500px; min-height: 600px; margin: 0 auto"></div>
+                </div>
+            </div>
+            <!--end of div used for chart-->
+
+        </div>
+    </div>
+
+    <footer th:replace="layout :: footer">
+    </footer>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+
+        var budget = [[${budget}]];
+        var budgets = [[${budgets}]];
+        var series = [];
+        var data = [];
+        budgets.forEach(function(budget,i){
+            var obj = new Object({
+                'name' : budget.fiscalYear,
+                'data' : [budget.appAdmitionFee,budget.semesterFee,budget.internetLibraryFee,budget.photocopyIncome,
+                    budget.studentCard,budget.telephoneIncome,budget.miscellaneousIncome,budget.meiseMasterDegree
+                ]
+            });
+            series.push(obj);
+//            series[i] = budget;
+//            console.log(i);
+        });
+        series.forEach(function(s){
+            console.log(s);
+        });
+        console.log(series);
+        var totalBudget = [[${totalBudget}]];
+//        console.log(budgets);
+//        console.log(totalBudget);
+
+        $(function () {
+            $('#chart').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Monthly Average Temperature'
+                },
+                subtitle: {
+                    text: 'Source: WorldClimate.com'
+                },
+                xAxis: {
+                    categories: ['2011', '2012', 'Mar', 'Apr', 'May', 'Jun',
+                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value ;
+                        }
+                    }
+                },
+                tooltip: {
+                    crosshairs: true,
+                    shared: true
+                },
+                plotOptions: {
+                    spline: {
+                        marker: {
+                            radius: 2,
+                            lineColor: '#666666',
+                            lineWidth: 1
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Tokyo',
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                        y: 26.5,
+                        marker: {
+                            symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+                        }
+                    }, 23.3, 18.3, 13.9, 9.6]
+
+                }, {
+                    name: 'London',
+                    marker: {
+                        symbol: 'diamond'
+                    },
+                    data: [{
+                        y: 3.9,
+                        marker: {
+                            symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
+                        }
+                    }, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]
+            });
+        });
+
+
+        /*]]>*/
+    </script>
+
+</body>
+</html>

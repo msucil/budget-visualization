@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>VisualizeController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+VisualizeController.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.gces.budget.web; 
+ 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.ExpenseBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.IncomeBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.UserService; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.budget.BudgetService; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.Logger; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.LoggerFactory; 
+</span><span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired; 
+</span><span class="s0">import </span><span class="s1">org.springframework.http.HttpStatus; 
+</span><span class="s0">import </span><span class="s1">org.springframework.stereotype.Controller; 
+</span><span class="s0">import </span><span class="s1">org.springframework.ui.Model; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.PathVariable; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.RequestMapping; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.client.HttpServerErrorException; 
+ 
+</span><span class="s0">import </span><span class="s1">java.security.Principal; 
+ 
+</span><span class="s2">/** 
+ * Created by minamrosh on 1/15/16. 
+ */</span><span class="s1"> 
+ 
+@Controller 
+</span><span class="s0">public class </span><span class="s1">VisualizeController { 
+ 
+    </span><span class="s0">private final </span><span class="s1">Logger log = LoggerFactory.getLogger(VisualizeController.</span><span class="s0">class</span><span class="s1">); 
+ 
+    </span><span class="s0">private </span><span class="s1">BudgetService budgetService; 
+ 
+    </span><span class="s0">private </span><span class="s1">UserService userService; 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setBudgetService(BudgetService budgetService){ 
+        </span><span class="s0">this</span><span class="s1">.budgetService = budgetService; 
+    } 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setUserService(UserService userService){ 
+        </span><span class="s0">this</span><span class="s1">.userService = userService; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/visualize/income&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String visualizeIncome(Principal principal,Model model ){ 
+ 
+        IncomeBudget incomeBudget = budgetService.getLatestIncomeBudget(userService.getCurrentUserId(principal)); 
+</span><span class="s2">//        ObjectMapper jsonmapper = new ObjectMapper();</span><span class="s1"> 
+ 
+ 
+</span><span class="s2">//        log.info(&quot;json &quot; +jsonmapper.writeValueAsString(incomeBudget));</span><span class="s1"> 
+ 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,incomeBudget); 
+        model.addAttribute(</span><span class="s3">&quot;totalBudget&quot;</span><span class="s1">,budgetService.getTotalIncomeBudget(incomeBudget)); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart | Income | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart of Income Budget for year &quot;</span><span class="s1">+ incomeBudget.getFiscalYear()); 
+        </span><span class="s0">return </span><span class="s3">&quot;income-piechart&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value=</span><span class="s3">&quot;/visualize/income/{chart}&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String visualizeIncome(Principal principal, Model model, @PathVariable(</span><span class="s3">&quot;chart&quot;</span><span class="s1">) String chart){ 
+        IncomeBudget incomeBudget = budgetService.getLatestIncomeBudget(userService.getCurrentUserId(principal)); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,incomeBudget); 
+        model.addAttribute(</span><span class="s3">&quot;totalBudget&quot;</span><span class="s1">,budgetService.getTotalIncomeBudget(incomeBudget)); 
+        </span><span class="s0">if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;barchart&quot;</span><span class="s1">)) { 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Barchart | Income | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Pie Chart of Income Budget for year &quot; </span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-barchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;piechart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart | Income | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart of Income Budget for year &quot;</span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-piechart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;stackchart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Column Chart | Income Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Column Chart of Income Budget for year &quot;</span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-stackchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">throw new </span><span class="s1">HttpServerErrorException(HttpStatus.BAD_REQUEST); 
+        } 
+ 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/visualize/income/{year}/{chart}&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String visualizeIncomeByYear(Principal principal, Model model, 
+                                            @PathVariable(</span><span class="s3">&quot;year&quot;</span><span class="s1">) String year, @PathVariable(</span><span class="s3">&quot;chart&quot;</span><span class="s1">) String chart){ 
+        IncomeBudget incomeBudget = budgetService.getIncomeBudgetByYear(year, userService.getCurrentUserId(principal)); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,incomeBudget); 
+        model.addAttribute(</span><span class="s3">&quot;totalBudget&quot;</span><span class="s1">,budgetService.getTotalIncomeBudget(incomeBudget)); 
+        </span><span class="s0">if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;barchart&quot;</span><span class="s1">)) { 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Barchart | Income Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Pie Chart of Income Budget for year &quot; </span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-barchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;piechart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart | Income Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart of Income Budget for year &quot;</span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-piechart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;stackchart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Column Chart | Income Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Column Chart of Income Budget for year &quot;</span><span class="s1">+ incomeBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;income-stackchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">throw new </span><span class="s1">HttpServerErrorException(HttpStatus.BAD_REQUEST); 
+        } 
+ 
+    } 
+ 
+    @RequestMapping(value=</span><span class="s3">&quot;/visualize/expense/{chart}&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String visualizeExpense(Principal principal, Model model,@PathVariable(</span><span class="s3">&quot;chart&quot;</span><span class="s1">) String chart){ 
+        ExpenseBudget expenseBudget = budgetService.getLatestExpenseBudget(userService.getCurrentUserId(principal)); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,expenseBudget); 
+        model.addAttribute(</span><span class="s3">&quot;totalBudget&quot;</span><span class="s1">,budgetService.getTotalExpenseBudget(expenseBudget)); 
+        </span><span class="s0">if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;barchart&quot;</span><span class="s1">)) { 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Barchart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Pie Chart of Expense Budget for year &quot; </span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-barchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;piechart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart of Expense Budget for year &quot;</span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-piechart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;stackchart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Chart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Chart of Expense Budget for year &quot;</span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-stackchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">throw new </span><span class="s1">HttpServerErrorException(HttpStatus.BAD_REQUEST); 
+        } 
+ 
+    } 
+ 
+    @RequestMapping(value=</span><span class="s3">&quot;/visualize/expense/{year}/{chart}&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String visualizeExpenseByYear(Principal principal, Model model,@PathVariable(</span><span class="s3">&quot;year&quot;</span><span class="s1">) String year, @PathVariable(</span><span class="s3">&quot;chart&quot;</span><span class="s1">) String chart){ 
+        ExpenseBudget expenseBudget = budgetService.getExpenseBudgetByYear(year,userService.getCurrentUserId(principal)); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,expenseBudget); 
+        model.addAttribute(</span><span class="s3">&quot;totalBudget&quot;</span><span class="s1">,budgetService.getTotalExpenseBudget(expenseBudget)); 
+        </span><span class="s0">if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;barchart&quot;</span><span class="s1">)) { 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Barchart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">, </span><span class="s3">&quot;Pie Chart of Expense Budget for year &quot; </span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-barchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;piechart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Pie Chart of Expense Budget for year &quot;</span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-piechart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else if</span><span class="s1">(chart.equalsIgnoreCase(</span><span class="s3">&quot;stackchart&quot;</span><span class="s1">)){ 
+            model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Chart | Expense Budget | Visualization | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+            model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Stack Chart of Expense Budget for year &quot;</span><span class="s1">+ expenseBudget.getFiscalYear()); 
+            </span><span class="s0">return </span><span class="s3">&quot;expense-stackchart&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">else</span><span class="s1">{ 
+            </span><span class="s0">throw new </span><span class="s1">HttpServerErrorException(HttpStatus.BAD_REQUEST); 
+        } 
+ 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

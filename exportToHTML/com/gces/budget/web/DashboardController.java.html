@@ -1,0 +1,275 @@
+<html>
+<head>
+<title>DashboardController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+DashboardController.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.gces.budget.web; 
+ 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.dto.BudgetSheetDTO; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.ExpenseBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.IncomeBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.exception.SheetNotFoundException; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.repository.UserRepository; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.UserService; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.budget.BudgetService; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.Logger; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.LoggerFactory; 
+</span><span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired; 
+</span><span class="s0">import </span><span class="s1">org.springframework.dao.DuplicateKeyException; 
+</span><span class="s0">import </span><span class="s1">org.springframework.stereotype.Controller; 
+</span><span class="s0">import </span><span class="s1">org.springframework.ui.Model; 
+</span><span class="s0">import </span><span class="s1">org.springframework.validation.BindingResult; 
+</span><span class="s0">import </span><span class="s1">org.springframework.validation.FieldError; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.*; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.multipart.MultipartFile; 
+ 
+</span><span class="s0">import </span><span class="s1">javax.validation.Valid; 
+</span><span class="s0">import </span><span class="s1">java.io.IOException; 
+</span><span class="s0">import </span><span class="s1">java.math.BigDecimal; 
+</span><span class="s0">import </span><span class="s1">java.security.Principal; 
+</span><span class="s0">import </span><span class="s1">java.util.List; 
+ 
+</span><span class="s2">/** 
+ * Created by minamrosh on 1/5/16. 
+ */</span><span class="s1"> 
+ 
+@Controller 
+</span><span class="s0">public class </span><span class="s1">DashboardController { 
+ 
+    </span><span class="s0">private </span><span class="s1">BudgetService budgetService; 
+ 
+    </span><span class="s0">private </span><span class="s1">UserRepository userRepo; 
+ 
+    </span><span class="s0">private </span><span class="s1">UserService userService; 
+ 
+    </span><span class="s0">private final </span><span class="s1">Logger log = LoggerFactory.getLogger(DashboardController.</span><span class="s0">class</span><span class="s1">); 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setBudgetService(BudgetService budgetService){ 
+        </span><span class="s0">this</span><span class="s1">.budgetService = budgetService; 
+    } 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setUserRepo(UserRepository userRepo){ 
+        </span><span class="s0">this</span><span class="s1">.userRepo = userRepo; 
+    } 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setUserService(UserService userService){ 
+        </span><span class="s0">this</span><span class="s1">.userService = userService; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String dashboard(Model model){ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Dashboard | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;dashboard&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/income-budget-sheets&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String incomeBudgetSheets(Model model, Principal principal){ 
+        String userId = userRepo.findOneByUsername(principal.getName()).getId(); 
+        List&lt;IncomeBudget&gt; incomeBudgets = budgetService.getAllIncomeBudgetSheets(userId); 
+ 
+        </span><span class="s0">if</span><span class="s1">(incomeBudgets != </span><span class="s0">null</span><span class="s1">) { 
+            model.addAttribute(</span><span class="s3">&quot;budgetSheets&quot;</span><span class="s1">, incomeBudgets); 
+            log.info(</span><span class="s3">&quot;budget Sheets&quot; </span><span class="s1">+ incomeBudgets.toString()); 
+        } 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">true</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Income Budget Sheets | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Income Budget Sheets&quot;</span><span class="s1">); 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/view-income-budget-sheet/{sheetId}&quot;</span><span class="s1">,method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String viewIncomeBudgetSheet(@PathVariable(</span><span class="s3">&quot;sheetId&quot;</span><span class="s1">) String sheetId, Model model){ 
+        IncomeBudget incomeBudget = budgetService.getIncomeBudgetSheetById(sheetId); 
+ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Detail Income Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Detail Income Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">true</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,incomeBudget); 
+        BigDecimal totalIncome = budgetService.getTotalIncomeBudget(incomeBudget); 
+        log.info(</span><span class="s3">&quot;total income&quot; </span><span class="s1">+ totalIncome); 
+ 
+ 
+        model.addAttribute(</span><span class="s3">&quot;total&quot;</span><span class="s1">, budgetService.getTotalIncomeBudget(incomeBudget)); 
+        </span><span class="s0">return </span><span class="s3">&quot;detail-budget-sheet&quot;</span><span class="s1">; 
+    } 
+ 
+ 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/upload-income-budget-sheet&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String uploadIncomeBudgetSheetForm(Model model, BudgetSheetDTO budgetSheetDTO){ 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">, budgetSheetDTO); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Income Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Income Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">true</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/upload-income-budget-sheet&quot;</span><span class="s1">, method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String uploadIncomeBudgetSheet(@ModelAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">) @Valid BudgetSheetDTO budgetSheetDTO, 
+                                          @RequestParam(</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">) MultipartFile budgetSheet, 
+                                          BindingResult result, 
+                                          Principal principal, 
+                                          Model model) </span><span class="s0">throws </span><span class="s1">IOException { 
+ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Income Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Income Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">true</span><span class="s1">); 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">if</span><span class="s1">(budgetSheet.isEmpty()){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">,</span><span class="s3">&quot;Select Income Budget Sheet&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">try </span><span class="s1">{ 
+            IncomeBudget incomeBudget = budgetService.saveIncomeBudget(budgetSheet, budgetSheetDTO, 
+                    userService.getCurrentUserId(principal)); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(IOException ex){ 
+            </span><span class="s0">throw new </span><span class="s1">IOException(ex.getMessage()); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(NullPointerException ex){ 
+            log.debug(ex.getStackTrace().toString()); 
+            </span><span class="s0">throw new </span><span class="s1">NullPointerException(</span><span class="s3">&quot;Unable to Save file&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(DuplicateKeyException dup){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;fiscalYear&quot;</span><span class="s1">,</span><span class="s3">&quot;Fiscal Year Already Exist!&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+ 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/dashboard/income-budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/delete-income-budget-sheet&quot;</span><span class="s1">,method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String delteIncomeBudgetSheet(@ModelAttribute(</span><span class="s3">&quot;sheetId&quot;</span><span class="s1">) String sheetId) </span><span class="s0">throws </span><span class="s1">Exception{ 
+ 
+        budgetService.deleteIncomeBudgetSheetById(sheetId); 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/dashboard/income-budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/update-income-budget-sheet/{sheetId}&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String displayIncomeBudgetUpdateForm(@PathVariable(</span><span class="s3">&quot;sheetId&quot;</span><span class="s1">) String sheetId, Model model) 
+     </span><span class="s0">throws </span><span class="s1">SheetNotFoundException{ 
+        IncomeBudget budget = budgetService.getIncomeBudgetSheetById(sheetId); 
+        </span><span class="s0">if</span><span class="s1">(budget != </span><span class="s0">null</span><span class="s1">){ 
+            BudgetSheetDTO budgetSheetDTO = </span><span class="s0">new </span><span class="s1">BudgetSheetDTO(); 
+            budgetSheetDTO.setSheetId(sheetId); 
+            model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">, budgetSheetDTO); 
+        } 
+ 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">true</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Update Income Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Update Income Budget Sheet&quot;</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;update-sheet&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/expense-budget-sheets&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String expenseBudgetSheets(Model model, Principal principal){ 
+        String userId = userRepo.findOneByUsername(principal.getName()).getId(); 
+        model.addAttribute(</span><span class="s3">&quot;budgetSheets&quot;</span><span class="s1">, 
+                budgetService.getAllExpenseBudgetSheetByUser(userId) 
+        ); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">false</span><span class="s1">); 
+ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Expense Budget Sheets | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Expense Budget Sheets&quot;</span><span class="s1">); 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/upload-expense-budget-sheet&quot;</span><span class="s1">,method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String uploadExpenseBudgetSheetForm(Model model, BudgetSheetDTO budgetSheetDTO){ 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">, budgetSheetDTO); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Expense Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Expense Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">false</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value=</span><span class="s3">&quot;/dashboard/upload-expense-budget-sheet&quot;</span><span class="s1">, method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String saveExpenseBudgetSheet(@ModelAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">) @Valid BudgetSheetDTO budgetSheetDTO, 
+                                         @RequestParam(</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">) MultipartFile budgetSheet, 
+                                         BindingResult result, 
+                                         Principal principal, 
+                                         Model model) </span><span class="s0">throws </span><span class="s1">IOException{ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Expense Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Upload Expense Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">false</span><span class="s1">); 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">if</span><span class="s1">(budgetSheet.isEmpty()){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">,</span><span class="s3">&quot;Select Expense Budget Sheet&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">try </span><span class="s1">{ 
+            ExpenseBudget expenseBudget = budgetService.saveExpenseBudget(budgetSheet, budgetSheetDTO, 
+                    userService.getCurrentUserId(principal)); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(IOException ex){ 
+            </span><span class="s0">throw new </span><span class="s1">IOException(ex.getMessage()); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(NullPointerException ex){ 
+            log.debug(ex.getStackTrace().toString()); 
+            </span><span class="s0">throw new </span><span class="s1">NullPointerException(</span><span class="s3">&quot;Unable to Save file&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(DuplicateKeyException dup){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;fiscalYear&quot;</span><span class="s1">,</span><span class="s3">&quot;Fiscal Year Already Exist!&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-budget-sheet&quot;</span><span class="s1">; 
+        } 
+ 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/dashboard/expense-budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/view-expense-budget-sheet/{sheetId}&quot;</span><span class="s1">,method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String viewExpenseBudgetSheet(@PathVariable(</span><span class="s3">&quot;sheetId&quot;</span><span class="s1">) String sheetId, Model model){ 
+ 
+        ExpenseBudget expenseBudget = budgetService.getExpenseBudgetSheetById(sheetId); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Detail Expense Budget Sheet | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Detail Expense Budget Sheet&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;income&quot;</span><span class="s1">,</span><span class="s0">false</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,expenseBudget); 
+        log.info(</span><span class="s3">&quot;expense budget&quot; </span><span class="s1">+ expenseBudget); 
+        BigDecimal totalExpense = budgetService.getTotalExpenseBudget(expenseBudget); 
+        log.info(</span><span class="s3">&quot;expense&quot; </span><span class="s1">+ totalExpense); 
+        model.addAttribute(</span><span class="s3">&quot;total&quot;</span><span class="s1">, totalExpense); 
+        </span><span class="s0">return </span><span class="s3">&quot;detail-budget-sheet&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/dashboard/delete-expense-budget-sheet&quot;</span><span class="s1">,method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String deleteExpenseBudgetSheet(@ModelAttribute(</span><span class="s3">&quot;sheetId&quot;</span><span class="s1">) String sheetId) </span><span class="s0">throws </span><span class="s1">Exception{ 
+ 
+        budgetService.deleteExpenseBudgetById(sheetId); 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/dashboard/expense-budget-sheets&quot;</span><span class="s1">; 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

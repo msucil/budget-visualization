@@ -1,0 +1,293 @@
+<html>
+<head>
+<title>UserController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+UserController.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.gces.budget.web; 
+ 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.dto.BudgetSheetDTO; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.dto.UserDTO; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.ExpenseBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.IncomeBudget; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.domain.entity.User; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.repository.UserRepository; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.UserService; 
+</span><span class="s0">import </span><span class="s1">com.gces.budget.service.budget.BudgetService; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.Logger; 
+</span><span class="s0">import </span><span class="s1">org.slf4j.LoggerFactory; 
+</span><span class="s0">import </span><span class="s1">org.springframework.beans.factory.annotation.Autowired; 
+</span><span class="s0">import </span><span class="s1">org.springframework.dao.DuplicateKeyException; 
+</span><span class="s0">import </span><span class="s1">org.springframework.http.HttpStatus; 
+</span><span class="s0">import </span><span class="s1">org.springframework.security.core.Authentication; 
+</span><span class="s0">import </span><span class="s1">org.springframework.security.core.userdetails.UserDetails; 
+</span><span class="s0">import </span><span class="s1">org.springframework.stereotype.Controller; 
+</span><span class="s0">import </span><span class="s1">org.springframework.ui.Model; 
+</span><span class="s0">import </span><span class="s1">org.springframework.validation.BindingResult; 
+</span><span class="s0">import </span><span class="s1">org.springframework.validation.FieldError; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.bind.annotation.*; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.multipart.MultipartFile; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.servlet.ModelAndView; 
+</span><span class="s0">import </span><span class="s1">org.springframework.web.servlet.mvc.support.RedirectAttributes; 
+ 
+</span><span class="s0">import </span><span class="s1">javax.validation.Valid; 
+</span><span class="s0">import </span><span class="s1">java.io.IOException; 
+</span><span class="s0">import </span><span class="s1">java.security.Principal; 
+ 
+</span><span class="s2">/** 
+ * User Controller 
+ * handles related to user management 
+ * Created by minamrosh on 11/20/15. 
+ */</span><span class="s1"> 
+ 
+@Controller 
+</span><span class="s0">public class </span><span class="s1">UserController { 
+ 
+    </span><span class="s0">private final </span><span class="s1">Logger log = LoggerFactory.getLogger(UserController.</span><span class="s0">class</span><span class="s1">); 
+ 
+    </span><span class="s0">private </span><span class="s1">UserService userService; 
+ 
+    </span><span class="s0">private </span><span class="s1">UserRepository userRepository; 
+ 
+    </span><span class="s0">private </span><span class="s1">BudgetService budgetService; 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setUserService(UserService userService){ 
+        </span><span class="s0">this</span><span class="s1">.userService = userService; 
+    } 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setUserRepository(UserRepository userRepository){ 
+        </span><span class="s0">this</span><span class="s1">.userRepository = userRepository; 
+    } 
+ 
+    @Autowired 
+    </span><span class="s0">public void </span><span class="s1">setBudgetService(BudgetService budgetService){ 
+        </span><span class="s0">this</span><span class="s1">.budgetService = budgetService; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String home(Model model){ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Home | Budget Visualization and Analysis Tool&quot;</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;index&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/login&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String login(){ 
+        </span><span class="s0">return </span><span class="s3">&quot;login&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/signup&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String signup(Model model){ 
+        model.addAttribute(</span><span class="s3">&quot;user&quot;</span><span class="s1">,</span><span class="s0">new </span><span class="s1">UserDTO()); 
+        </span><span class="s0">return </span><span class="s3">&quot;signup&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/signup&quot;</span><span class="s1">,method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String registerUser(@ModelAttribute(</span><span class="s3">&quot;user&quot;</span><span class="s1">) @Valid UserDTO user, BindingResult result){ 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            log.info(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3"> form Error&quot; </span><span class="s1">+ result.toString()); 
+</span><span class="s2">//            model.addAttribute(&quot;user&quot;,user);</span><span class="s1"> 
+            </span><span class="s0">return </span><span class="s3">&quot;signup&quot;</span><span class="s1">; 
+        } 
+ 
+        log.info(</span><span class="s3">&quot;Saving User Detail </span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">+user); 
+ 
+        User registeredUser = userService.registerNewUser(user); 
+        log.info(</span><span class="s3">&quot;Registered User : </span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+registeredUser); 
+ 
+</span><span class="s2">//        model.addAttribute(&quot;user&quot;,user);</span><span class="s1"> 
+        </span><span class="s0">return </span><span class="s3">&quot;success&quot;</span><span class="s1">; 
+ 
+</span><span class="s2">//        User regUser = userService.registerNewUser(user);</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//        return &quot;redirect:/user/success{regUser}&quot;;</span><span class="s1"> 
+ 
+    } 
+ 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/success/&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String success(@PathVariable(</span><span class="s3">&quot;regUser&quot;</span><span class="s1">) User regUser, Model model){ 
+        RedirectAttributes redirectAttributes; 
+ 
+        model.addAttribute(</span><span class="s3">&quot;regUser&quot;</span><span class="s1">, regUser); 
+        </span><span class="s0">return </span><span class="s3">&quot;success&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value =</span><span class="s3">&quot;/test&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">ModelAndView testRedirect(RedirectAttributes redAttr){ 
+        redAttr.addAttribute(</span><span class="s3">&quot;redirectParam&quot;</span><span class="s1">, </span><span class="s3">&quot;param&quot;</span><span class="s1">); 
+        log.info(</span><span class="s3">&quot;redirect param {}&quot;</span><span class="s1">, redAttr); 
+        </span><span class="s0">return new </span><span class="s1">ModelAndView(</span><span class="s3">&quot;redirect:/test/success/{redirectParam}&quot;</span><span class="s1">); 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/test/success/{redirectParam}&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = </span><span class="s3">&quot;Url Not Found&quot;</span><span class="s1">) 
+</span><span class="s2">//    @ExceptionHandler(value = )</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">String testSuccess(Model model, @ModelAttribute(</span><span class="s3">&quot;redirectParam&quot;</span><span class="s1">) String param 
+                              ) 
+    { 
+ 
+        log.info(</span><span class="s3">&quot;Log Param from test/success  :&quot; </span><span class="s1">+ param); 
+        </span><span class="s0">if </span><span class="s1">(param == </span><span class="s0">null</span><span class="s1">){ 
+            log.info(</span><span class="s3">&quot;Null parm {}&quot;</span><span class="s1">, param); 
+        } 
+        log.info(</span><span class="s3">&quot;Path Param : &quot;</span><span class="s1">+ param); 
+        model.addAttribute(</span><span class="s3">&quot;success&quot;</span><span class="s1">, param); 
+        model.addAttribute(</span><span class="s3">&quot;pathParam&quot;</span><span class="s1">, param); 
+        </span><span class="s0">return </span><span class="s3">&quot;success&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/account&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String account(Authentication authentication,Model model){ 
+ 
+        UserDetails logedInUser = (UserDetails) authentication.getPrincipal(); 
+        log.info(</span><span class="s3">&quot;user details, username : &quot; </span><span class="s1">+logedInUser.getUsername()); 
+        User user = userService.getUserByUsername(logedInUser.getUsername()); 
+        log.info(</span><span class="s3">&quot;user details of loged in user &quot; </span><span class="s1">+ user); 
+        UserDTO userDTO = </span><span class="s0">new </span><span class="s1">UserDTO(); 
+        userDTO.setId(user.getId()); 
+        userDTO.setEmail(user.getEmail()); 
+        userDTO.setUsername(user.getUsername()); 
+        model.addAttribute(</span><span class="s3">&quot;user&quot;</span><span class="s1">,user); 
+        model.addAttribute(</span><span class="s3">&quot;userDTO&quot;</span><span class="s1">,userDTO); 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;User Account | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;User Account&quot;</span><span class="s1">); 
+ 
+</span><span class="s2">//        model.addAttribute(&quot;userDetail&quot;,authentication.getDetails());</span><span class="s1"> 
+        </span><span class="s0">return </span><span class="s3">&quot;user-account&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/account&quot;</span><span class="s1">,method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String saveAccount(@ModelAttribute(</span><span class="s3">&quot;userDTO&quot;</span><span class="s1">) @Valid UserDTO userDTO, BindingResult result,Model model){ 
+ 
+        model.addAttribute(</span><span class="s3">&quot;pageTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;User Account | Budget Visualization &amp; Analysis Tool&quot;</span><span class="s1">); 
+        model.addAttribute(</span><span class="s3">&quot;sectionTitle&quot;</span><span class="s1">,</span><span class="s3">&quot;User Account&quot;</span><span class="s1">); 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            log.error(</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3"> form Error&quot; </span><span class="s1">+ result.toString()); 
+            </span><span class="s0">return </span><span class="s3">&quot;user-account&quot;</span><span class="s1">; 
+        } 
+ 
+        log.info(</span><span class="s3">&quot;userinfo &quot; </span><span class="s1">+ userDTO.toString()); 
+ 
+        userService.updateUserInfo(userDTO); 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/user/account&quot;</span><span class="s1">; 
+ 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/upload-income-budget&quot;</span><span class="s1">) 
+    </span><span class="s0">public </span><span class="s1">String uploadIncomeBudgetForm(Model model, BudgetSheetDTO budget){ 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,budget); 
+        </span><span class="s0">return </span><span class="s3">&quot;upload-income-budget&quot;</span><span class="s1">; 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/upload-income-budget&quot;</span><span class="s1">, method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String saveIncomeBudget(@ModelAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">) @Valid BudgetSheetDTO budget, BindingResult result, 
+                                  @RequestParam(</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">) MultipartFile budgetSheet, 
+                                   Principal principal) </span><span class="s0">throws </span><span class="s1">IOException { 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-income-budget&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">if</span><span class="s1">(budgetSheet.isEmpty()){ 
+            log.info(</span><span class="s3">&quot;budget sheet empty&quot;</span><span class="s1">); 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">,</span><span class="s3">&quot;Select Income Budget file&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-income-budget&quot;</span><span class="s1">; 
+        } 
+        </span><span class="s0">try </span><span class="s1">{ 
+            IncomeBudget incomeBudget = budgetService.saveIncomeBudget(budgetSheet, budget, 
+                    userRepository.findOneByUsername(principal.getName()).getId()); 
+ 
+            log.info(</span><span class="s3">&quot;Income Budget </span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+ incomeBudget); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(IOException ex){ 
+            log.info(ex.getMessage()); 
+            </span><span class="s0">throw new </span><span class="s1">IOException(ex.getMessage()); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(NullPointerException ex){ 
+            log.info(</span><span class="s3">&quot;data not saved&quot;</span><span class="s1">); 
+            </span><span class="s0">throw new </span><span class="s1">NullPointerException(</span><span class="s3">&quot;Unable to Save file&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(DuplicateKeyException dup){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;fiscalYear&quot;</span><span class="s1">,</span><span class="s3">&quot;Fiscal Year Already Exist!&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-income-budget&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/&quot;</span><span class="s1">; 
+ 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/upload-expense-budget&quot;</span><span class="s1">, method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String uploadExpenseBudgetForm(BudgetSheetDTO budgetSheetDTO, Model model){ 
+        model.addAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,budgetSheetDTO); 
+        </span><span class="s0">return </span><span class="s3">&quot;upload-expense-budget&quot;</span><span class="s1">; 
+ 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/upload-expense-budget&quot;</span><span class="s1">, method = RequestMethod.POST) 
+    </span><span class="s0">public </span><span class="s1">String saveExpenseBudget(@ModelAttribute(</span><span class="s3">&quot;budget&quot;</span><span class="s1">) @Valid BudgetSheetDTO budget, BindingResult result, 
+                                   @RequestParam(</span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">) MultipartFile budgetSheet, 
+                                   Principal principal) </span><span class="s0">throws </span><span class="s1">IOException { 
+ 
+        </span><span class="s0">if</span><span class="s1">(result.hasErrors()){ 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-expense-budget&quot;</span><span class="s1">; 
+        } 
+ 
+ 
+ 
+        </span><span class="s0">if</span><span class="s1">(budgetSheet.isEmpty()){ 
+            log.info(</span><span class="s3">&quot;budget sheet empty&quot;</span><span class="s1">); 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">, </span><span class="s3">&quot;budgetSheet&quot;</span><span class="s1">, </span><span class="s3">&quot;Select Income Budget file&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-expense-budget&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">try</span><span class="s1">{ 
+            ExpenseBudget expenseBudget = budgetService.saveExpenseBudget(budgetSheet, budget, 
+                    userRepository.findOneByUsername(principal.getName()).getId()); 
+ 
+            log.info(</span><span class="s3">&quot;Expense Budget </span><span class="s0">\n</span><span class="s3">&quot; </span><span class="s1">+ expenseBudget); 
+ 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(IOException ex){ 
+            log.info(ex.getMessage()); 
+            </span><span class="s0">throw new </span><span class="s1">IOException(ex.getMessage()); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(NullPointerException ex){ 
+            </span><span class="s0">throw new </span><span class="s1">NullPointerException(</span><span class="s3">&quot;Expense budge can't be saved now!&quot;</span><span class="s1">); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(DuplicateKeyException dup){ 
+            result.addError(</span><span class="s0">new </span><span class="s1">FieldError(</span><span class="s3">&quot;budget&quot;</span><span class="s1">,</span><span class="s3">&quot;fiscalYear&quot;</span><span class="s1">,</span><span class="s3">&quot;Fiscal Year Already Exist!&quot;</span><span class="s1">)); 
+            </span><span class="s0">return </span><span class="s3">&quot;upload-expense-budget&quot;</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">return </span><span class="s3">&quot;redirect:/&quot;</span><span class="s1">; 
+ 
+    } 
+ 
+    @RequestMapping(value = </span><span class="s3">&quot;/user/demo&quot;</span><span class="s1">,method = RequestMethod.GET) 
+    </span><span class="s0">public </span><span class="s1">String demoJs(Model model){ 
+        model.addAttribute(</span><span class="s3">&quot;jstitle&quot;</span><span class="s1">,</span><span class="s3">&quot;Hello Fromm Spring Controller&quot;</span><span class="s1">); 
+        </span><span class="s0">return </span><span class="s3">&quot;demojs&quot;</span><span class="s1">; 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

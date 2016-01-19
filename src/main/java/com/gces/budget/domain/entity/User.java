@@ -24,7 +24,7 @@ public class User {
 
     @NotNull
     @Email
-    private String email;
+    private  String email;
 
     @NotNull
     private boolean enabled;
