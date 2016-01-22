@@ -39,10 +39,10 @@
     background-color: #424242;
     color: #fafafa;
 }
-.modal-header h4{
-    font-family: "FontAwesome";
-    font-width: 400;
-}
+/*.modal-header h4{*/
+    /*font-family: "FontAwesome";*/
+    /*font-width: 400;*/
+/*}*/
 .modal-body{
     padding: 40px 50px;
     background-color: #ffffff;
@@ -83,10 +83,9 @@
 /*end of the image section*/
 /*spacing between two divs*/
 .spacing{
-    /*padding-top: 50px;*/
-    /*padding-left: 30px;*/
-    /*padding-right: 30px;*/
-    margin: 25px 0;
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 .spacing-index{
     padding: 5% 0;
@@ -101,10 +100,88 @@
     padding: 5% 0;
 }
 .index-icons i{
-    margin: 15px;
-    background-color: #EB5546;
-    color: #F5F5F5;
-    padding: 3%;
+    /*margin: 15px;*/
+    /*background-color: #EB5546;*/
+    /*color: #F5F5F5;*/
+    /*padding: 3%;*/
+
+    color: #fff;
+    background-color: #f44336; /* teal */
+    height: 100px;
+    width: 100px;
+    font-size: 65px;
+    line-height: 100px;
+    text-align: center;
+    overflow: hidden;
+    margin: 2%;
+
+    text-shadow: #e53935 1px 1px,
+    #d32f2f 2px 2px,
+    #d32f2f 3px 3px,
+    #d32f2f 4px 4px,
+    #d32f2f 5px 5px,
+    #d32f2f 6px 6px,
+    #d32f2f 7px 7px,
+    #d32f2f 8px 8px,
+    #d32f2f 9px 9px,
+    #d32f2f 10px 10px,
+    #d32f2f 11px 11px,
+    #d32f2f 12px 12px,
+    #d32f2f 13px 13px,
+    #d32f2f 14px 14px,
+    #d32f2f 15px 15px,
+    #d32f2f 16px 16px,
+    #d32f2f 17px 17px,
+    #d32f2f 18px 18px,
+    #d32f2f 19px 19px,
+    #d32f2f 20px 20px,
+    #d32f2f 21px 21px,
+    #d32f2f 22px 22px,
+    #d32f2f 23px 23px,
+    #d32f2f 24px 24px,
+    #d32f2f 25px 25px,
+    #d32f2f 26px 26px,
+    #d32f2f 27px 27px,
+    #d32f2f 28px 28px,
+    #d32f2f 29px 29px,
+    #d32f2f 30px 30px,
+    #d32f2f 31px 31px,
+    #d32f2f 32px 32px,
+    #d32f2f 33px 33px,
+    #d32f2f 34px 34px,
+    #d32f2f 35px 35px,
+    #d32f2f 36px 36px,
+    #d32f2f 37px 37px,
+    #d32f2f 38px 38px,
+    #d32f2f 39px 39px,
+    #d32f2f 40px 40px,
+    #d32f2f 41px 41px,
+    #d32f2f 42px 42px,
+    #d32f2f 43px 43px,
+    #d32f2f 44px 44px,
+    #d32f2f 45px 45px,
+    #d32f2f 46px 46px,
+    #d32f2f 47px 47px,
+    #d32f2f 48px 48px,
+    #d32f2f 49px 49px,
+    #d32f2f 50px 50px,
+    #d32f2f 51px 51px,
+    #d32f2f 52px 52px,
+    #d32f2f 53px 53px,
+    #d32f2f 54px 54px,
+    #d32f2f 55px 55px,
+    #d32f2f 56px 56px,
+    #d32f2f 57px 57px,
+    #d32f2f 58px 58px,
+    #d32f2f 59px 59px,
+    #d32f2f 60px 60px,
+    #d32f2f 61px 61px,
+    #d32f2f 62px 62px,
+    #d32f2f 63px 63px,
+    #d32f2f 64px 64px,
+    #d32f2f 65px 65px,
+    #d32f2f 66px 66px,
+    #d32f2f 67px 67px;
 }
 /*end of icons section*/
 /*for footer*/
@@ -166,11 +243,10 @@ footer.page-footer{
     background: #E13D2E  none repeat scroll 0 0;
 }
 .main-container1{
-    padding: 8% 0 2%;
+    padding: 10% 0 2% 0;
     background-color: #616161;
     color: whitesmoke;
-    /*text-shadow: 10px 10px 10px black;*/
-    text-shadow: 2px 5px 5px rgb(29, 29, 29);
+    text-shadow: 10px 10px 10px black;
     font-weight: 500;
 }
 .chart-heading{
@@ -194,7 +270,7 @@ footer.page-footer{
     content:"";
     position:absolute;
     z-index:-1;
-    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    /*box-shadow:0 0 20px rgba(0,0,0,0.8);*/
     top:50%;
     bottom:0;
     left:10px;
@@ -224,7 +300,7 @@ footer.page-footer{
     padding: 30px 20px;
 }
 /*circle button*/
-.btn-floating.btn-large i {
+.btn-floating.btn-large i{
     line-height: 49px !important;
     font-size: 1.5rem;
 }
@@ -331,29 +407,81 @@ footer.page-footer{
     font-size: 1.5em;
 }
 .dashboard-main{
-    padding: 0px 0px 10px;
+    /*padding: 0 0 10px;*/
     background-color: whitesmoke;
 }
 .elegant-color{
     background-color: #2E2E2E;
+}
+.dashboard-card{
+    margin: 0 20px;
+}
+.dashboard-link{
+    /*margin: 30px 0;*/
+    padding: 5% 0;
+}
+.dashboard-icon, .dashboard-icon1, .dashboard-icon2{
+    background-color: #00C851;
+    padding: 20px;
+}
+#icon, #icon a i{
+    background-color: #33b5e5;
+    color: #33b5e5;
+}
+#icon1, #icon1 a i{
+    background-color: #ff4444;
+    color: #ff4444;
+}
+#icon2, #icon2 a i{
+    background-color: #00C851;
+    color: #00C851;
+}
+.dashboard-icon a i{
+    padding: 30px 35px;
+    background-color: whitesmoke !important;
+    border-radius: 50%;
+    color: #da3a30;
+}
+.dashboard-icon a i:hover{
+    color: #727272 !important;
+}
+.dashboard-card p a{
+    color: #2E2E2E;
+    display: block;
+    padding: 20px;
+}
+.dashboard-card p a i{
+    line-height: inherit;
+    padding: 0 10px;
+}
+.dashboard-card p a:hover{
+    color:#727272;
 }
 .side-link{
     margin-bottom: 10px;
     min-height: 515px;
 }
 .side-link ul li{
-    padding: 10px;
+    padding: 1% 10%;
 }
 .side-link ul li a{
-    color: #DDDADA;
-    font-size: 1em;
+    color: #2E2E2E;
+    font-size: 16px;
+    display: block;
+    padding: 5% 2%;
+
 }
-.side-link ul li:hover, .side-link ul li:focus{
-    background-color: #848383;
+.side-link ul li .active{
+    background: #2E2E2E;
+    color: whitesmoke;
+}
+.side-link ul li a:hover, .side-link ul li a:focus{
+    background-color: #DEDEDE;
     cursor: pointer;
 }
-.side-link ul li a span{
+.side-link ul li a i{
     padding-right: 10px;
+    padding-left: 5px;
 }
 .main-title h5{
     padding: 0 10px;
@@ -447,7 +575,7 @@ table{
     margin-right: 20px;
     transition: margin-right 0.2s ease;
     font-size: 20px;
-    padding: px;
+    /*padding: px;*/
 }
 .follow:hover{
     width: 145px;
@@ -475,8 +603,7 @@ table{
     position: relative;
 }
 
-.effect5::before, .effect5::after
-{
+.effect5::before, .effect5::after{
     z-index: -1;
     position: absolute;
     content: "";
@@ -495,3 +622,66 @@ table{
     right: 10px;
     left: auto;
 }
+/*About page*/
+.about-container{
+    color: whitesmoke;
+    text-shadow: 10px 10px 10px black;
+    font-weight: 500;
+}
+.team-heading{
+    background: #274665 url("../img/about-bg.png") no-repeat;
+    min-height: 30%;
+    box-shadow: 1px -15px 18px #684646;
+}
+.team-heading{
+    padding: 15% 0 5%;
+}
+.team-heading h3 span{
+    border: 2px solid whitesmoke;
+    padding: 2% 5%;
+    margin: 0 30%;
+}
+.team-heading p{
+    padding: 1%;
+}
+.team{
+    padding: 10%;
+}
+.team-main{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+.team h5{
+    padding: 5% 0 0;
+}
+.team img{
+    max-height: 150px;
+    max-width: 200px;
+
+    /*background-color: #00b0ff;*/
+}
+.team p{
+    padding: 0 0 20% 0;
+}
+/*end of about page*/
+
+
+
+/*=====================================================================*/
+/*dropdown*/
+.dropdown-menu li > a, .dropdown-menu li > span {
+                font-size: 1.2rem;
+                color: #656565;
+                display: block;
+                padding: 1rem;
+            }
+/*end of dropdown*/
+/*Register page*/
+.register-heading{
+    padding: 4% 0 2%;
+}
+
+/*end of register page*/
+
+
+/*================================================================*/

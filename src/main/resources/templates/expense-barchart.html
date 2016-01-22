@@ -20,19 +20,41 @@
         <div class="row">
             <!--left column-->
             <div class="col-md-3">
-                <div class=" right-content">
-                    <div class="chart-icons text-center">
-                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/barchart}">
-                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
-                        </a>
-                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/piechart}">
-                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
+                <div class="chart-icons text-left">
+                    <div class="chart-icon-list">
+                        <form th:action="@{/visualize/expense-budget}" th:method="get">
+                            <p>
+                                <input type="radio" name="chart" value="barchart" id="chart1" />
+                                <label for="chart1"><a class="btn-floating btn-large btn-danger"><i class=" fa fa-bar-chart-o" title="Bar Chart"></i></a></label>
+                            </p>
 
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/expense/stackchart}">
-                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                            <p>
+                                <input type="radio" name="chart" value="piechart" id="chart2" />
+                                <label for="chart2"><a class="btn-floating btn-large btn-danger"><i class="fa fa-pie-chart" title="Pie Chart"></i></a></label>
+                            </p>
+
+
+                            <p>
+                                <input type="radio" name="chart" value="stackchart" id="chart3" />
+                                <label for="chart3"><a class="btn-floating btn-large btn-danger"><i class="fa fa-bar-chart" title="Stack Chart"></i></a></label>
+                            </p>
+
+                            <div class="input-group date" id="fiscalYear">
+                                <input type="text" class="form-control input-date" size="2" th:value="${budget.fiscalYear}" th:field="${budget.fiscalYear}" />
+                                <div class="input-group-addon calander-icon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class=" col-sm-9">
+                                    <button type="submit" class="btn btn-default">Visualize</button>
+                                </div>
+                            </div>
+
+
+                        </form>
                     </div>
+
                 </div>
 
             </div>
@@ -200,98 +222,19 @@
             });
         });
 
-//        $(function () {
-//            $('#chart').highcharts({
-//                chart: {
-//                    plotBackgroundColor: null,
-//                    plotBorderWidth: null,
-//                    plotShadow: false,
-//                    type: 'pie',
-//                    backgroundColor: 'transparent'
-//                },
-//                title: {
-//                    text: ''
-//                },
-//                tooltip: {
-//                    pointFormat: '{series.name}: <b>{point.percentage:.1f}</b>'
-//                },
-//                plotOptions: {
-//                    pie: {
-//                        allowPointSelect: true,
-//                        cursor: 'pointer',
-//                        dataLabels: {
-//                            enabled: true,
-//                            format: '<b>{point.name}</b><br/>Rs.{point.amount} ({point.percentage:.4f}%)',
-//                            style: {
-//                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || "black"
-//                            }
-//                        },
-//                        showInLegend: true
-//                    }
-//                },
-//                legend: {
-//                    layout: 'vertical',
-//                    align: 'right',
-//                    verticalAlign: 'middle',
-//                    borderWidth: 0,
-//                    itemMarginTop: 5,
-//                    itemMarginBottom: 5,
-//                    itemStyle: {
-//                        lineHeight: '14px',
-//                        fontSize:'15px',
-//                        fontWeight: '200'
-//
-//                    },
-//                    symbolHeight: 12,
-//                    symbolWidth: 12,
-//                    symbolRadius: 6
-//                },
-//                credits:{
-//                    enabled: false
-//                },
-//                series: [{
-//                    name: 'Percentage',
-//                    colorByPoint: true,
-//                    data: [{
-//                        name: 'Appli/Admition Fee',
-//                        amount: budget.appAdmitionFee,
-//                        y: (budget.appAdmitionFee/totalBudget) * 100
-//                    }, {
-//                        name: 'Semester Fee per Year',
-//                        amount: budget.semesterFee,
-//                        y: (budget.semesterFee/totalBudget) * 100,
-//                        sliced: true,
-//                        selected: true
-//                    }, {
-//                        name: 'Internet & Library fee',
-//                        amount: budget.internetLibraryFee,
-//                        y: (budget.internetLibraryFee/totalBudget) * 100
-//                    }, {
-//                        name: 'Photocopy Income',
-//                        amount: budget.photocopyIncome,
-//                        y: (budget.photocopyIncome/totalBudget) * 100
-//                    }, {
-//                        name: 'Student Card',
-//                        amount: budget.studentCard,
-//                        y: (budget.studentCard/totalBudget) * 100
-//                    }, {
-//                        name: 'Telephone',
-//                        amount: budget.telephoneIncome,
-//                        y: (budget.telephoneIncome/totalBudget) * 100
-//                    },{
-//                        name: 'Cert/late Fee/Mis. Income',
-//                        amount: budget.miscellaneousIncome,
-//                        y: (budget.miscellaneousIncome/totalBudget) * 100
-//                    },{
-//                        name : 'MEISE Master Degree',
-//                        amount : budget.meiseMasterDegree,
-//                        y : (budget.meiseMasterDegree/totalBudget) * 100
-//                    }]
-//                }]
-//            });
-//
-//        });
+
         /*]]>*/
+    </script>
+
+    <script type="text/javascript">
+        $("#fiscalYear").datepicker({
+            format: "yyyy",
+            startView: 2,
+            minViewMode: 2,
+            clearBtn: true,
+            orientation: "auto",
+            autoclose: true,
+        });
     </script>
 
 </body>

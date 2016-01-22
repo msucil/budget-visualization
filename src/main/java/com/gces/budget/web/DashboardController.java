@@ -60,7 +60,7 @@ public class DashboardController {
         return "dashboard";
     }
 
-    @RequestMapping(value = "/dashboard/income-budget-sheets")
+    @RequestMapping(value = "/income-budget-sheets")
     public String incomeBudgetSheets(Model model, Principal principal){
         String userId = userRepo.findOneByUsername(principal.getName()).getId();
         List<IncomeBudget> incomeBudgets = budgetService.getAllIncomeBudgetSheets(userId);
@@ -76,7 +76,7 @@ public class DashboardController {
         return "budget-sheets";
     }
 
-    @RequestMapping(value = "/dashboard/view-income-budget-sheet/{sheetId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/view-income-budget-sheet/{sheetId}",method = RequestMethod.GET)
     public String viewIncomeBudgetSheet(@PathVariable("sheetId") String sheetId, Model model){
         IncomeBudget incomeBudget = budgetService.getIncomeBudgetSheetById(sheetId);
 
@@ -94,7 +94,7 @@ public class DashboardController {
 
 
 
-    @RequestMapping(value = "/dashboard/upload-income-budget-sheet", method = RequestMethod.GET)
+    @RequestMapping(value = "/upload-income-budget-sheet", method = RequestMethod.GET)
     public String uploadIncomeBudgetSheetForm(Model model, BudgetSheetDTO budgetSheetDTO){
         model.addAttribute("budget", budgetSheetDTO);
         model.addAttribute("pageTitle","Upload Income Budget Sheet | Budget Visualization & Analysis Tool");
@@ -103,7 +103,7 @@ public class DashboardController {
         return "upload-budget-sheet";
     }
 
-    @RequestMapping(value = "/dashboard/upload-income-budget-sheet", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload-income-budget-sheet", method = RequestMethod.POST)
     public String uploadIncomeBudgetSheet(@ModelAttribute("budget") @Valid BudgetSheetDTO budgetSheetDTO,
                                           @RequestParam("budgetSheet") MultipartFile budgetSheet,
                                           BindingResult result,
@@ -139,18 +139,18 @@ public class DashboardController {
         }
 
 
-        return "redirect:/dashboard/income-budget-sheets";
+        return "redirect:/income-budget-sheets";
     }
 
-    @RequestMapping(value = "/dashboard/delete-income-budget-sheet",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-income-budget-sheet",method = RequestMethod.POST)
     public String delteIncomeBudgetSheet(@ModelAttribute("sheetId") String sheetId) throws Exception{
 
         budgetService.deleteIncomeBudgetSheetById(sheetId);
 
-        return "redirect:/dashboard/income-budget-sheets";
+        return "redirect:/income-budget-sheets";
     }
 
-    @RequestMapping(value = "/dashboard/update-income-budget-sheet/{sheetId}")
+    @RequestMapping(value = "/update-income-budget-sheet/{sheetId}")
     public String displayIncomeBudgetUpdateForm(@PathVariable("sheetId") String sheetId, Model model)
      throws SheetNotFoundException{
         IncomeBudget budget = budgetService.getIncomeBudgetSheetById(sheetId);
@@ -166,12 +166,15 @@ public class DashboardController {
         return "update-sheet";
     }
 
-    @RequestMapping(value = "/dashboard/expense-budget-sheets")
-    public String expenseBudgetSheets(Model model, Principal principal){
+    @RequestMapping(value = "/expense-budget-sheets")
+    public String expenseBudgetSheets(Model model, Principal principal) throws Exception{
         String userId = userRepo.findOneByUsername(principal.getName()).getId();
-        model.addAttribute("budgetSheets",
-                budgetService.getAllExpenseBudgetSheetByUser(userId)
-        );
+        List<ExpenseBudget> budgets = budgetService.getAllExpenseBudgetSheetByUser(userId);
+
+        if(budgets != null)
+            model.addAttribute("budgetSheets",budgets);
+//        else
+//            model.addAttribute("budgetSheets",budgets);
         model.addAttribute("income",false);
 
         model.addAttribute("pageTitle","Expense Budget Sheets | Budget Visualization & Analysis Tool");
@@ -180,7 +183,7 @@ public class DashboardController {
         return "budget-sheets";
     }
 
-    @RequestMapping(value = "/dashboard/upload-expense-budget-sheet",method = RequestMethod.GET)
+    @RequestMapping(value = "/upload-expense-budget-sheet",method = RequestMethod.GET)
     public String uploadExpenseBudgetSheetForm(Model model, BudgetSheetDTO budgetSheetDTO){
         model.addAttribute("budget", budgetSheetDTO);
         model.addAttribute("pageTitle","Upload Expense Budget Sheet | Budget Visualization & Analysis Tool");
@@ -189,7 +192,7 @@ public class DashboardController {
         return "upload-budget-sheet";
     }
 
-    @RequestMapping(value="/dashboard/upload-expense-budget-sheet", method = RequestMethod.POST)
+    @RequestMapping(value="/upload-expense-budget-sheet", method = RequestMethod.POST)
     public String saveExpenseBudgetSheet(@ModelAttribute("budget") @Valid BudgetSheetDTO budgetSheetDTO,
                                          @RequestParam("budgetSheet") MultipartFile budgetSheet,
                                          BindingResult result,
@@ -224,10 +227,10 @@ public class DashboardController {
         }
 
 
-        return "redirect:/dashboard/expense-budget-sheets";
+        return "redirect:/expense-budget-sheets";
     }
 
-    @RequestMapping(value = "/dashboard/view-expense-budget-sheet/{sheetId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/view-expense-budget-sheet/{sheetId}",method = RequestMethod.GET)
     public String viewExpenseBudgetSheet(@PathVariable("sheetId") String sheetId, Model model){
 
         ExpenseBudget expenseBudget = budgetService.getExpenseBudgetSheetById(sheetId);
@@ -242,12 +245,12 @@ public class DashboardController {
         return "detail-budget-sheet";
     }
 
-    @RequestMapping(value = "/dashboard/delete-expense-budget-sheet",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete-expense-budget-sheet",method = RequestMethod.POST)
     public String deleteExpenseBudgetSheet(@ModelAttribute("sheetId") String sheetId) throws Exception{
 
         budgetService.deleteExpenseBudgetById(sheetId);
 
-        return "redirect:/dashboard/expense-budget-sheets";
+        return "redirect:/expense-budget-sheets";
     }
 
 }

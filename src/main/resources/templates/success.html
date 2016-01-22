@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en"
-        xmlns:th="http://www.thymeleaf.org">
-<head>
+      xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: headSection(${pageTitle})">
     <meta charset="UTF-8" />
-    <title> Home : Budget Visualization</title>
+    <title th:text="Home"> Home : Budget Visualization</title>
 </head>
 <body>
-    <h1>Welcome! Budget Visualization and Analysis Tool</h1>
-    <h2>Your BI Partner</h2>
-    <!--@thymesVar id="success" type="string"-->
-    <h3>Account Created Successfully!</h3>
-
+<header th:replace="layout:: infoNavbar"></header>
+<section class="container-fluid main-container1 spacing z-depth-1">
+    <div class="top-content effect6">
+        <h3 class="h3-responsive text-center chart-heading">Your Account has been created! Please Login to continue</h3>
+    </div>
+</section>
+<footer th:replace="layout :: footer">
+</footer>
 </body>
 </html>

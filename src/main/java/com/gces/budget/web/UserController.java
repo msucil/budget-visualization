@@ -73,12 +73,13 @@ public class UserController {
 
     @RequestMapping(value = "/user/signup", method = RequestMethod.GET)
     public String signup(Model model){
+        model.addAttribute("pageTitle","Signup | Budget Visualization & Analysis Tool");
         model.addAttribute("user",new UserDTO());
         return "signup";
     }
 
     @RequestMapping(value = "/user/signup",method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult result){
+    public String registerUser(@ModelAttribute("user") @Valid UserDTO user, BindingResult result,Model model){
 
         if(result.hasErrors()){
             log.info("\n form Error" + result.toString());
@@ -90,7 +91,7 @@ public class UserController {
 
         User registeredUser = userService.registerNewUser(user);
         log.info("Registered User : \n" +registeredUser);
-
+        model.addAttribute("pageTitle","Success | Budget Visualization & Analysis Tool");
 //        model.addAttribute("user",user);
         return "success";
 
@@ -262,10 +263,5 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/user/demo",method = RequestMethod.GET)
-    public String demoJs(Model model){
-        model.addAttribute("jstitle","Hello Fromm Spring Controller");
-        return "demojs";
-    }
 
 }

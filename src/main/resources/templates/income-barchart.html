@@ -21,16 +21,41 @@
             <!--left column-->
             <div class="col-md-3">
                 <div class=" right-content">
-                    <div class="chart-icons text-center">
-                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-area-chart" title="Area Chart"></i></a>-->
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/barchart}">
-                            <i class="fa fa-bar-chart-o" title="Bar Chart"></i>
-                        </a>
-                        <!--<a class="btn-floating btn-large btn-danger"><i class="fa fa-line-chart" title="Line Chart"></i></a>-->
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/piechart}">
-                            <i class="fa fa-pie-chart" title="Pie Chart"></i></a>
-                        <a class="btn-floating btn-large btn-danger" th:href="@{/visualize/income/stackchart}">
-                            <i class="fa fa-bar-chart" title="Stack Chart"></i></a>
+                    <div class="chart-icons text-left">
+                        <div class="chart-icon-list">
+                            <form th:action="@{/visualize/income-budget}" th:method="get">
+                                <p>
+                                    <input type="radio" name="chart" value="barchart" id="chart1" />
+                                    <label for="chart1"><a class="btn-floating btn-large btn-danger"><i class=" fa fa-bar-chart-o" title="Bar Chart"></i></a></label>
+                                </p>
+
+                                <p>
+                                    <input type="radio" name="chart" value="piechart" id="chart2" />
+                                    <label for="chart2"><a class="btn-floating btn-large btn-danger"><i class="fa fa-pie-chart" title="Pie Chart"></i></a></label>
+                                </p>
+
+
+                                <p>
+                                    <input type="radio" name="chart" value="stackchart" id="chart3" />
+                                    <label for="chart3"><a class="btn-floating btn-large btn-danger"><i class="fa fa-bar-chart" title="Stack Chart"></i></a></label>
+                                </p>
+
+                                <div class="input-group date" id="fiscalYear">
+                                    <input type="text" class="form-control input-date" size="2" th:value="${budget.fiscalYear}" th:field="${budget.fiscalYear}" />
+                                    <div class="input-group-addon calander-icon">
+                                        <span class="fa fa-calendar"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class=" col-sm-9">
+                                        <button type="submit" class="btn btn-default">Visualize</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+
                     </div>
                 </div>
 
@@ -147,6 +172,17 @@
 
 
         /*]]>*/
+    </script>
+
+    <script type="text/javascript">
+        $("#fiscalYear").datepicker({
+            format: "yyyy",
+            startView: 2,
+            minViewMode: 2,
+            clearBtn: true,
+            orientation: "auto",
+            autoclose: true,
+        });
     </script>
 
 </body>

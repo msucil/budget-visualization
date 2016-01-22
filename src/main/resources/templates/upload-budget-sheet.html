@@ -11,10 +11,10 @@
 </header>
 <section class="container-fluid dashboard-main">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div th:include="dashboardLayout :: sideNav"></div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="main-contain">
                 <div class="main-title z-depth-1 clearfix">
                     <h5><i class="fa fa-cloud-upload">&nbsp;</i> <span th:text="${sectionTitle}"></span> </h5>
@@ -23,7 +23,7 @@
 
                     <div class="row">
                         <div class=" form-content">
-                            <form th:action="${income}? '/dashboard/upload-income-budget-sheet' :'/dashboard/upload-expense-budget-sheet'"
+                            <form th:action="${income}? '/upload-income-budget-sheet' :'/upload-expense-budget-sheet'"
                                   method="post" th:object="${budget}" enctype="multipart/form-data">
                                 <div class="ow" th:if="${#fields.hasErrors('*')}">
                                     <div class="col-sm-12">

@@ -12,10 +12,10 @@
 </header>
 <section class="container-fluid dashboard-main">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div th:include="dashboardLayout :: sideNav"></div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="main-contain">
                 <div class="main-title z-depth-1 clearfix">
                     <h5 class="pull-left" ><i class="fa fa-th">&nbsp;</i><span th:text="${sectionTitle}"></span> </h5>
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="username" class="col-sm-3 control-label label-style">Username</label>
                             <div class="col-sm-4">
-                                <input class="form-control" id="username" type="text" th:value="${userDTO.username}" th:field="${userDTO.username}" placeholder="Username" />
+                                <input class="form-control" id="username" type="text" th:value="${userDTO.username}" th:field="${userDTO.username}" placeholder="Username" readonly="true"/>
                                 <input type="hidden" th:field="${userDTO.id}" th:value="${userDTO.id}" />
                             </div>
                         </div>

@@ -12,10 +12,10 @@
 </header>
 <section class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div th:include="dashboardLayout :: sideNav"></div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="main-contain">
                 <div class="main-title z-depth-1 clearfix">
                     <h5><span th:text="${sectionTitle}"></span></h5>
@@ -78,7 +78,7 @@
     </div>
 </section>
 
-<footer th:include="dashboardLayout :: footer">
+<footer th:include="layout :: footer">
 </footer>
 <script type="text/javascript">
     $("#fiscalYear").datepicker({

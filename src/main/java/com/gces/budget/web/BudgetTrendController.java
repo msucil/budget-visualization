@@ -9,13 +9,11 @@ import com.gces.budget.service.budget.analysis.BudgetAnalysisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.HttpServerErrorException;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
@@ -43,49 +41,31 @@ public class BudgetTrendController {
     }
 
 
-    @RequestMapping(value="/budget-trend/income/{chart}")
-    public String visualizeIncome(Principal principal, Model model, @PathVariable("chart") String chart){
+    @RequestMapping(value="/budget-trend/income")
+    public String visualizeIncome(Principal principal, Model model){
 
         List<IncomeBudget> incomeBudgetList = budgetService.getAllIncomeBudgetSheets(userService.getCurrentUserId(principal));
 
 
         model.addAttribute("budgets",incomeBudgetList);
 
-        if(chart.equalsIgnoreCase("barchart")) {
+
             model.addAttribute("pageTitle", "Barchart | Income | Budget Trend | Budget Visualization & Analysis Tool");
             model.addAttribute("sectionTitle", "Stacked Bar Chart");
             return "income-trend-barchart";
-        }
-        else if(chart.equalsIgnoreCase("linechart")){
-            model.addAttribute("pageTitle","Pie Chart | Income | Budget Trend | Budget Visualization & Analysis Tool");
-            model.addAttribute("sectionTitle", "Line Chart");
-            return "income-trend-linechart";
-        }
-        else{
-            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
-        }
 
     }
 
-    @RequestMapping(value="/budget-trend/expense/{chart}")
-    public String visualizeExpense(Principal principal, Model model,@PathVariable("chart") String chart){
+    @RequestMapping(value="/budget-trend/expense")
+    public String visualizeExpense(Principal principal, Model model){
         List<ExpenseBudget> expenseBudgets = budgetService.getAllExpenseBudgetSheetByUser(
                 userService.getCurrentUserId(principal)
         );
         model.addAttribute("budgets",expenseBudgets);
-        if(chart.equalsIgnoreCase("barchart")) {
+
             model.addAttribute("pageTitle", "Stacked Bar Chart | Expense Budget | Budget Trend | Budget Visualization & Analysis Tool");
             model.addAttribute("sectionTitle", "Stacked Bar Chart ");
             return "expense-trend-barchart";
-        }
-        else if(chart.equalsIgnoreCase("linechart")){
-            model.addAttribute("pageTitle","Pie Chart | Expense Budget | Visualization | Budget Visualization & Analysis Tool");
-            model.addAttribute("sectionTitle","Line Chart");
-            return "expense-trend-linechart";
-        }
-        else{
-            throw new HttpServerErrorException(HttpStatus.BAD_REQUEST);
-        }
 
     }
 
@@ -102,6 +82,9 @@ public class BudgetTrendController {
 
         int x2 = interval.length;
         double y2 = intercept + (slope * x2);
+        int x3 = interval.length + 1;
+        double est = intercept + (slope * x3);
+        BigDecimal esst = BigDecimal.valueOf(est);
 
         model.addAttribute("budgets",budgetDTOs);
         model.addAttribute("x1",x1);
@@ -109,6 +92,10 @@ public class BudgetTrendController {
         model.addAttribute("x2", x2);
         model.addAttribute("y2",y2);
         model.addAttribute("interval",interval);
+        model.addAttribute("est",esst);
+
+        model.addAttribute("pageTitle","Budget Analysis | Budget Visualization and Analysis Tool");
+        model.addAttribute("sectionTitle","Linear Regression Analysis of the Budget");
         return "project-budget";
 
     }

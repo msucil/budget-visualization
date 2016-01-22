@@ -8,52 +8,7 @@
 </head>
 <body>
 
-    <header>
-        <!--nav bar section-->
-        <nav class="navbar navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="col-lg-12">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Budget Visualization</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#" th:href="@{/visualize/income}" >Visualization</a></li>
-                        <li><a href="#" th:href="@{/budget-trend/income}" >Budget Trend</a></li>
-                        <li><a href="analysis.html" th:href="@{analyse-budget}" >Budget Projection</a></li>
-                    </ul>
-                    <!--Login in button-->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!--<li sec:authorize="isAuthenticated()"><a th:href="/user/logout" >Lougout</a></li>-->
-                        <li sec:authorize="isAuthenticated()">
-                            <form th:action="@{/user/logout}" method="post">
-                                <button th:type="submit">Logout</button>
-                            </form>
-                        </li>
-                        <li sec:authorize="!isAuthenticated()">
-                            <a th:href="@{/user/login}" title="Login">Login</a>
-                        </li>
-                        <li sec:authorize="!isAuthenticated()">
-                            <a th:href="@{/user/signup}" title="Register">Register</a>
-                        </li>
-                    </ul>
-                    <!--end for login button-->
-                </div>
-                    </div>
-            </div>
-
-        </nav>
-
-        <!--end for nav bar section-->
-    </header>
+<header th:replace="layout:: infoNavbar"></header>
 
     <section class="main-content">
         <div class="container-full">

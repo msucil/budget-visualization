@@ -12,19 +12,19 @@
 </header>
 <section class="container-fluid dashboard-main">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div th:include="dashboardLayout :: sideNav"></div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="main-contain">
                 <div class="main-title z-depth-1 clearfix">
                     <h5 class="pull-left" ><i class="fa fa-th">&nbsp;</i><span th:text="${sectionTitle}"></span> </h5>
                     <div class="pull-right">
                         <div th:if="${income}">
-                            <a th:href="@{/dashboard/upload-income-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                            <a th:href="@{/upload-income-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
                         </div>
                         <div th:if="!${income}">
-                            <a th:href="@{/dashboard/upload-expense-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
+                            <a th:href="@{/upload-expense-budget-sheet}"><button type="button" class="btn btn-primary btn-floating wave-effect"><i class="fa fa-cloud-upload fa-2x"></i></button></a>
                         </div>
 
                     </div>
@@ -233,7 +233,7 @@
     </div>
 </section>
 
-<footer th:include="dashboardLayout :: footer">
+<footer th:include="layout :: footer">
 </footer>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/

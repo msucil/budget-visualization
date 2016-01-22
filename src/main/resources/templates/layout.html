@@ -20,10 +20,10 @@
     <!-- Material Design Bootstrap -->
     <link th:href="@{/assets/plugin/mdbootstrap/css/mdb.css}" rel="stylesheet" />
 
+
     <!--rangeslider styling-->
     <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/normalize.css}" />
-    <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/ion.rangeSlider.css}" />
-    <link rel="stylesheet" th:href="@{/assets/plugin/ionRangeSliderDemo/css/ion.rangeSlider.skinFlat.css}" />
+    <link th:href="@{/assets/plugin/bootstrap-datepicker/css/bootstrap-datepicker3.min.css}" rel="stylesheet" />
     <!--custom css-->
     <!--for radio check buttons-->
     <link th:href="@{/assets/plugin/icheck-1.x/square/grey.css}" rel="stylesheet" />
@@ -36,6 +36,8 @@
     <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/highcharts.js}"></script>
     <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/exporting.js}"></script>
     <script type="text/javascript" th:src="@{/assets/plugin/highcharts/js/export-csv.js}"></script>
+    <!--Date Picker-->
+    <script type="text/javascript" th:src="@{/assets/plugin/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
 
 </head>
 <body>
@@ -47,7 +49,7 @@
                     <li sec:authorize="!isAuthenticated()"><a th:href="@{/user/login}">Login</a></li>
                     <li sec:authorize="isAuthenticated()" >
                         <form th:action="@{/user/logout}" method="post">
-                            <button th:type="submit">Logout</button>
+                            <button th:type="submit" class="btn-link">Logout</button>
                         </form>
                     </li>
                     <li sec:authorize="isAuthenticated()">
@@ -61,25 +63,91 @@
         </div>
     </header>
 
+    <header th:fragment="infoNavbar">
+        <!--nav bar section-->
+        <nav class="navbar navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="col-lg-12">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!--<a th:href="@{/}">-->
+                            <!--<img src="assets/img/logo1.png" th:href="@{/assets/img/logo1.png}" class="img-responsive" alt="logo" style="max-width: 150px; max-height: 55px;" />-->
+                        <!--</a>-->
+                    </div>
 
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class=""><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Visualization <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a th:href="@{/visualize/income}">Income Budget</a></li>
+                                    <li><a th:href="@{/visualize/expense}">Expense Budget</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Budget Trend <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a th:href="@{/budget-trend/income}">Income Budget</a></li>
+                                    <li><a th:href="@{/budget-trend/expense}">Expense Budget</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="analysis.html" th:href="@{/project-budget}" >Project Budget</a></li>
+                        </ul>
+                        <!--Login in button-->
+                        <ul class="nav navbar-nav navbar-right">
+                            <!--<li sec:authorize="isAuthenticated()"><a th:href="/user/logout" >Lougout</a></li>-->
+                            <li class="dropdown" sec:authorize="isAuthenticated()">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa fa-user">&nbsp;</i> <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a th:href="@{/dashboard}">Dashboard</a></li>
+                                    <li><a th:href="@{/user/account}">Account</a></li>
+                                    <li>
+                                        <a>
+                                            <form th:action="@{/user/logout}" method="post">
+                                                <button th:type="submit" class="btn-link">Logout</button>
+                                            </form>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li sec:authorize="!isAuthenticated()">
+                                <a th:href="@{/user/login}" title="Login">Login</a>
+                            </li>
+                            <li sec:authorize="!isAuthenticated()">
+                                <a th:href="@{/user/signup}" title="Register">Register</a>
+                            </li>
+                        </ul>
+                        <!--end for login button-->
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+        <!--end for nav bar section-->
+    </header>
 
     <section th:fragment="footer">
-    <footer class="page-footer elegant-color center-on-small-only" >
-
+    <footer class="page-footer elegant-color center-on-small-only" style="margin-top: 25px;" >
         <div class="container ">
             <div class="row">
                 <div class="col-md-8">
                     <div class="footer-copyright">
-                        2015 &copy; <a href="#"><em>Budget Visualization</em></a>. All Rights Reserved.
+                        2015 &copy; <a href="#"><em style="font-size: 15px;">Budget Visualization &amp; Analysis Tool</em></a>. All Rights Reserved.
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-12 text-center">
-                    <ul class="footer-links white-text">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Visualization</a></li>
-                        <li><a href="#">Analysis</a></li>
-                        <li><a href="#">About</a></li>
-                    </ul>
                 </div>
 
             </div>

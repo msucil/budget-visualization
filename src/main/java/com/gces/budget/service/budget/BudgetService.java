@@ -269,11 +269,22 @@ public class BudgetService {
     public ExpenseBudget getExpenseBudgetByYear(String year, String userId){
         ExpenseBudget expenseBudget = expenseBudgetRepo.findOneByFiscalYearAndUserId(year, userId);
         if(expenseBudget == null){
-            throw new SheetNotFoundException("Sorry! No Income Budget!");
+            throw new SheetNotFoundException("Sorry! No Expense Budget!");
         }
         else{
             return expenseBudget;
         }
+    }
+
+    public List<String> getAllIncomeBudgetFiscalYear(String userId){
+        List<IncomeBudget> incomeBudgets = incomeBudgetRepo.findAllByUserIdOrderByFiscalYearDesc(userId);
+        List<String> fiscalYears = new ArrayList<String>();
+        for(IncomeBudget incomeBudget : incomeBudgets){
+            fiscalYears.add(incomeBudget.getFiscalYear());
+
+        }
+
+        return fiscalYears;
     }
 
 }

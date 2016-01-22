@@ -18,28 +18,58 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Budget Visualization</a>
+                    <!--<a th:href="@{/}">-->
+                        <!--<img src="assets/img/logo1.png" th:href="@{/assets/img/logo1.png}" class="img-responsive" alt="logo" style="max-width: 150px; max-height: 55px;" />-->
+                    <!--</a>-->
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li ><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
-                        <li class="active"><a href="#" th:href="@{/visualize/income}" >Visualization</a></li>
-                        <li><a href="#" th:href="@{/budget-trend/income}" >Budget Trend</a></li>
-                        <li><a href="analysis.html" th:href="@{analyse-budget}" >Budget Projection</a></li>
+                        <li><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
+                        <li class="dropdown" th:class="active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Visualization <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/visualize/income}">Income Budget</a></li>
+                                <li><a th:href="@{/visualize/expense}">Expense Budget</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Budget Trend <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/budget-trend/income}">Income Budget</a></li>
+                                <li><a th:href="@{/budget-trend/expense}">Expense Budget</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="analysis.html" th:href="@{/project-budget}" >Project Budget</a></li>
                     </ul>
                     <!--Login in button-->
                     <ul class="nav navbar-nav navbar-right">
                         <!--<li sec:authorize="isAuthenticated()"><a th:href="/user/logout" >Lougout</a></li>-->
-                        <li sec:authorize="isAuthenticated()">
-                            <form th:action="@{/user/logout}" method="post">
-                                <button th:type="submit">Logout</button>
-                            </form>
+                        <li class="dropdown" sec:authorize="isAuthenticated()">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fa fa-user">&nbsp;</i> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/dashboard}">Dashboard</a></li>
+                                <li><a th:href="@{/user/account}">Account</a></li>
+                                <li>
+                                    <a>
+                                        <form th:action="@{/user/logout}" method="post">
+                                            <button th:type="submit" class="btn-link">Logout</button>
+                                        </form>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
                         <li sec:authorize="!isAuthenticated()">
                             <a th:href="@{/user/login}" title="Login">Login</a>
                         </li>
-                        <li sec:authorize="!isAuthenticated()">
+                        <li sec:authorize="!isAuthenticated()" class="'active">
                             <a th:href="@{/user/signup}" title="Register">Register</a>
                         </li>
                     </ul>

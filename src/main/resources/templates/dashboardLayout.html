@@ -44,16 +44,32 @@
 <body>
 <header th:fragment="header">
         <nav class="navbar elegant-color">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="navbar-brand">
-                            <h5><a th:href="@{/dashboard}">Data Visualization</a></h5>
+
                         </div>
                         <div class="navbar-right nav-right-contains">
                             <ul class="list-inline">
                                 <li><a href="#" th:href="@{/}"><i class="fa fa-home"></i></a></li>
-                                <li><form th:action="@{/user/logout}" th:method="post"><button type="submit">Logout</button></form></li>
+                                <li class="dropdown" sec:authorize="isAuthenticated()">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <i class="fa fa-user">&nbsp;</i> <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a th:href="@{/dashboard}">Dashboard</a></li>
+                                        <li><a th:href="@{/user/account}">Account</a></li>
+                                        <li>
+                                            <a>
+                                                <form th:action="@{/user/logout}" method="post">
+                                                    <button th:type="submit" class="btn-link">Logout</button>
+                                                </form>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -63,17 +79,17 @@
 </header>
 <section class="container-fluid">
     <div class="row">
-        <div class="col-md-2" th:fragment="sideNav">
-            <div class="elegant-color">
-                <div class="side-link z-depth-1-half">
+        <div class="col-md-3" th:fragment="sideNav">
+
+                <div class="side-link">
                     <ul>
-                        <li class="active"><a th:href="@{/dashboard}"><i class="fa fa-dashboard">&nbsp;</i>Dashboard</a></li>
-                        <li><a href="upload.html" th:href="@{/dashboard/income-budget-sheets}"><i class="fa fa-file-excel-o">&nbsp;</i>Income Budget Sheets</a></li>
-                        <li><a href="upload.html" th:href="@{/dashboard/expense-budget-sheets}"><i class="fa fa-file-excel-o">&nbsp;</i>Expense Budget Sheets</a></li>
+                        <li class="active"><a th:href="@{/dashboard}"><i class="fa fa-dashboard fa-1x">&nbsp;</i>Dashboard</a></li>
+                        <li><a href="upload.html" th:href="@{/income-budget-sheets}"><i class="fa fa-file-excel-o fa-1x">&nbsp;</i>Income Budget Sheets</a></li>
+                        <li><a href="upload.html" th:href="@{/expense-budget-sheets}"><i class="fa fa-file-excel-o fa-1z">&nbsp;</i>Expense Budget Sheets</a></li>
                         <li><a href="#" th:href="@{/user/account}"><i class="fa fa-user">&nbsp;</i>Profile</a></li>
                     </ul>
                 </div>
-            </div>
+
         </div>
     </div>
 </section>

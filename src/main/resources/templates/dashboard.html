@@ -12,53 +12,52 @@
 </header>
 <section class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div th:include="dashboardLayout :: sideNav"></div>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
         <div class="main-contain">
             <div class="main-title z-depth-1 clearfix">
-                <h5>Dashboard</h5>
+                <h5><i class="fa fa-dashboard">&nbsp;</i>Dashboard</h5>
             </div>
-            <div class="z-depth-1">
-                <table class="table table-responsive table-contain">
-                    <thead>
-                    <tr>
-                        <td>S.No.</td>
-                        <td>Fiscal Year</td>
-                        <th>Type</th>
-                        <th>Options</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2015</td>
-                        <td>Income</td>
-                        <td class="table-option-icon">
-                            <a href="update">
-                                <button class="btn btn-success btn-sm" type="button">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
-                            </a>
-                            <a href="delete">
-                                <button class="btn btn-danger btn-sm" type="button">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
 
+            <div class="dashboard-link">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="dashboard-card card">
+                            <div class="dashboard-icon" id="icon">
+                                <a href="#"><i class="fa fa-file-text fa-5x"></i></a>
+                            </div>
+                            <p><a href="#" th:href="@{/income-budget-sheets}">Income Sheet<i class="fa fa-arrow-circle-right"></i></a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="dashboard-card card">
+                            <div class="dashboard-icon" id="icon1">
+                                <a href="#"><i class="fa fa-file-o fa-5x"></i></a>
+                            </div>
+                            <p><a href="#" th:href="@{/expense-budget-sheets}">Expense Sheet<i class=" fa fa-arrow-circle-right"></i></a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="dashboard-card card">
+                            <div class="dashboard-icon" id="icon2">
+                                <a href="#"><i class="fa fa-user fa-5x"></i></a>
+                            </div>
+                            <p><a href="#" th:href="@{/user/account}">Manage Account<i class="fa fa-arrow-circle-right"></i></a></p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
         </div>
     </div>
 
     </div>
 </section>
 
-<footer th:include="dashboardLayout :: footer">
+<footer th:include="layout :: footer">
 </footer>
 </body>
 </html>

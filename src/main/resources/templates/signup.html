@@ -1,37 +1,125 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="layout :: headSection(${pageTitle})">
     <meta charset="UTF-8" />
-
-    <title> Home : Budget Visualization</title>
+    <title th:text="Home"> Home : Budget Visualization</title>
 </head>
 <body>
-<ul>
-    <li><a th:href="@{/}">Home</a> </li>
-</ul>
-<h1>Welcome! Budget Visualization and Analysis Tool</h1>
-<h2>Your BI Partner</h2>
-<div>
-    <form th:action="@{/user/signup}" method="post" th:object="${user}">
-        <div th:if="${#fields.hasErrors('*')}">
-            <p th:each="err : ${#fields.errors('*')}"  th:text="${err}"></p>
-        </div>
-        <div>
-            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-        </div>
-        <div>
-            <input type="email" th:value="${user.email}" th:field="${user.email}" placeholder="Email" />
-            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label> <br />
-            <input type="text" th:value="${user.username}" th:field="${user.username}" placeholder="Username" /> <br/>
-            <input type="password" th:value="${user.password}" th:field="${user.password}" placeholder="Password" /><br />
-            <input type="password" th:value="${user.matchingPassword}" th:field="${user.matchingPassword}" placeholder="Confirm Password" />
-            <input type="submit" value="Signup" />
+<header>
+    <!--nav bar section-->
+    <nav class="navbar navbar-fixed-top navbar-nav-color1" role="navigation">
+        <div class="container">
+            <div class="col-lg-12">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--<a th:href="@{/}">-->
+                        <!--<img src="assets/img/logo1.png" th:href="@{/assets/img/logo1.png}" class="img-responsive" alt="logo" style="max-width: 150px; max-height: 55px;" />-->
+                    <!--</a>-->
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="index.html" th:href="@{/}">Home <span class="sr-only">(current)</span></a></li>
+                        <li class="dropdown" th:class="active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Visualization <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/visualize/income}">Income Budget</a></li>
+                                <li><a th:href="@{/visualize/expense}">Expense Budget</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Budget Trend <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/budget-trend/income}">Income Budget</a></li>
+                                <li><a th:href="@{/budget-trend/expense}">Expense Budget</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="analysis.html" th:href="@{/project-budget}" >Project Budget</a></li>
+                    </ul>
+                    <!--Login in button-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--<li sec:authorize="isAuthenticated()"><a th:href="/user/logout" >Lougout</a></li>-->
+                        <li class="dropdown" sec:authorize="isAuthenticated()">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <i class="fa fa-user">&nbsp;</i> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a th:href="@{/dashboard}">Dashboard</a></li>
+                                <li><a th:href="@{/user/account}">Account</a></li>
+                                <li>
+                                    <a>
+                                        <form th:action="@{/user/logout}" method="post">
+                                            <button th:type="submit" class="btn-link">Logout</button>
+                                        </form>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li sec:authorize="!isAuthenticated()">
+                            <a th:href="@{/user/login}" title="Login">Login</a>
+                        </li>
+                        <li sec:authorize="!isAuthenticated()">
+                            <a th:href="@{/user/signup}" title="Register">Register</a>
+                        </li>
+                    </ul>
+                    <!--end for login button-->
+                </div>
+            </div>
         </div>
 
+    </nav>
 
-    </form>
+    <!--end for nav bar section-->
+</header>
+<div class="main-content" style="margin-top: 100px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Signup</h2>
+                <div class="form-group">
+                    <form action="#" th:action="@{/user/signup}" method="post" th:object="${user}">
+                        <div th:if="${#fields.hasErrors('*')}">
+                            <p th:each="err : ${#fields.errors('*')}"  th:text="${err}"></p>
+                        </div>
+
+
+                        <div class="input-field">
+                            <input type="email" id="email" th:value="${user.email}" th:field="${user.email}" placeholder="Email" /><label for="email">Email</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="text" th:value="${user.username}" id="username" th:field="${user.username}" placeholder="Username" />
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" th:value="${user.password}" id="password" th:field="${user.password}" placeholder="Password" /><label for="password">Password</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="password" id="confirm-password" th:value="${user.matchingPassword}" th:field="${user.matchingPassword}" placeholder="Confirm Password" />
+                            <label for="confirm-password">Confirm Password</label>
+                        </div>
+                        <div class="input-field">
+                            <input type="submit" class="btn btn-default" value="submit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<footer th:replace="layout :: footer">
+</footer>
 </body>
 </html>
